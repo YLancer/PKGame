@@ -1,0 +1,750 @@
+fileFormatVersion: 2
+guid: d2fcc1fbdb9f78343a387d2b92f2daf8
+timeCreated: 1517807128
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: ddz_table_all1_0
+    21300002: ddz_table_all1_1
+    21300004: ddz_table_all1_2
+    21300006: ddz_table_all1_3
+    21300008: ddz_table_all1_4
+    21300010: ddz_table_all1_5
+    21300012: ddz_table_all1_6
+    21300014: ddz_table_all1_7
+    21300016: ddz_table_all1_8
+    21300018: ddz_table_all1_9
+    21300020: ddz_table_all1_10
+    21300022: ddz_table_all1_11
+    21300024: ddz_table_all1_12
+    21300026: ddz_table_all1_13
+    21300028: ddz_table_all1_14
+    21300030: ddz_table_all1_15
+    21300032: ddz_table_all1_16
+    21300034: ddz_table_all1_17
+    21300036: ddz_table_all1_18
+    21300038: ddz_table_all1_19
+    21300040: ddz_table_all1_20
+    21300042: ddz_table_all1_21
+    21300044: ddz_table_all1_22
+    21300046: ddz_table_all1_23
+    21300048: ddz_table_all1_24
+    21300050: ddz_table_all1_25
+    21300052: ddz_table_all1_26
+    21300054: ddz_table_all1_27
+    21300056: ddz_table_all1_28
+    21300058: ddz_table_all1_29
+    21300060: ddz_table_all1_30
+    21300062: ddz_table_all1_31
+    21300064: ddz_table_all1_32
+    21300066: ddz_table_all1_33
+    21300068: ddz_table_all1_34
+    21300070: ddz_table_all1_35
+    21300072: ddz_table_all1_36
+    21300074: ddz_table_all1_37
+    21300076: ddz_table_all1_38
+    21300078: ddz_table_all1_39
+    21300080: ddz_table_all1_40
+    21300082: ddz_table_all1_41
+    21300084: ddz_table_all1_42
+    21300086: ddz_table_all1_43
+    21300088: ddz_table_all1_44
+    21300090: ddz_table_all1_45
+    21300092: ddz_table_all1_46
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: -1
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: iPhone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: ddz_table_all1_0
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 642
+        width: 361
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_1
+      rect:
+        serializedVersion: 2
+        x: 439
+        y: 642
+        width: 361
+        height: 362
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_2
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 890
+        width: 124
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_3
+      rect:
+        serializedVersion: 2
+        x: 964
+        y: 984
+        width: 50
+        height: 38
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_4
+      rect:
+        serializedVersion: 2
+        x: 965
+        y: 938
+        width: 43
+        height: 41
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_5
+      rect:
+        serializedVersion: 2
+        x: 965
+        y: 891
+        width: 42
+        height: 43
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_6
+      rect:
+        serializedVersion: 2
+        x: 833
+        y: 751
+        width: 123
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_7
+      rect:
+        serializedVersion: 2
+        x: 965
+        y: 868
+        width: 50
+        height: 19
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_8
+      rect:
+        serializedVersion: 2
+        x: 965
+        y: 840
+        width: 30
+        height: 24
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_9
+      rect:
+        serializedVersion: 2
+        x: 999
+        y: 851
+        width: 20
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_10
+      rect:
+        serializedVersion: 2
+        x: 965
+        y: 826
+        width: 37
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_11
+      rect:
+        serializedVersion: 2
+        x: 664
+        y: 496
+        width: 124
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_12
+      rect:
+        serializedVersion: 2
+        x: 832
+        y: 612
+        width: 124
+        height: 123
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_13
+      rect:
+        serializedVersion: 2
+        x: 36
+        y: 500
+        width: 261
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_14
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 500
+        width: 261
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_15
+      rect:
+        serializedVersion: 2
+        x: 804
+        y: 472
+        width: 122
+        height: 124
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_16
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 537
+        width: 67
+        height: 68
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_17
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 404
+        width: 421
+        height: 64
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_18
+      rect:
+        serializedVersion: 2
+        x: 658
+        y: 389
+        width: 129
+        height: 100
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_19
+      rect:
+        serializedVersion: 2
+        x: 936
+        y: 466
+        width: 65
+        height: 67
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_20
+      rect:
+        serializedVersion: 2
+        x: 332
+        y: 304
+        width: 92
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_21
+      rect:
+        serializedVersion: 2
+        x: 435
+        y: 392
+        width: 190
+        height: 70
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_22
+      rect:
+        serializedVersion: 2
+        x: 791
+        y: 364
+        width: 129
+        height: 102
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_23
+      rect:
+        serializedVersion: 2
+        x: 928
+        y: 352
+        width: 88
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_24
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 256
+        width: 265
+        height: 96
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_25
+      rect:
+        serializedVersion: 2
+        x: 431
+        y: 271
+        width: 87
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_26
+      rect:
+        serializedVersion: 2
+        x: 531
+        y: 272
+        width: 87
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_27
+      rect:
+        serializedVersion: 2
+        x: 643
+        y: 274
+        width: 87
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_28
+      rect:
+        serializedVersion: 2
+        x: 743
+        y: 251
+        width: 87
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_29
+      rect:
+        serializedVersion: 2
+        x: 843
+        y: 308
+        width: 59
+        height: 52
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_30
+      rect:
+        serializedVersion: 2
+        x: 911
+        y: 235
+        width: 87
+        height: 108
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_31
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 120
+        width: 310
+        height: 105
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_32
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 179
+        width: 398
+        height: 87
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_33
+      rect:
+        serializedVersion: 2
+        x: 753
+        y: 200
+        width: 31
+        height: 42
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_34
+      rect:
+        serializedVersion: 2
+        x: 802
+        y: 204
+        width: 33
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_35
+      rect:
+        serializedVersion: 2
+        x: 841
+        y: 203
+        width: 35
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_36
+      rect:
+        serializedVersion: 2
+        x: 331
+        y: 132
+        width: 40
+        height: 20
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_37
+      rect:
+        serializedVersion: 2
+        x: 341
+        y: 143
+        width: 20
+        height: 28
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_38
+      rect:
+        serializedVersion: 2
+        x: 386
+        y: 131
+        width: 35
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_39
+      rect:
+        serializedVersion: 2
+        x: 427
+        y: 130
+        width: 34
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_40
+      rect:
+        serializedVersion: 2
+        x: 746
+        y: 142
+        width: 38
+        height: 36
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_41
+      rect:
+        serializedVersion: 2
+        x: 804
+        y: 144
+        width: 34
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_42
+      rect:
+        serializedVersion: 2
+        x: 845
+        y: 143
+        width: 34
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_43
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 69
+        width: 42
+        height: 44
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_44
+      rect:
+        serializedVersion: 2
+        x: 74
+        y: 74
+        width: 35
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_45
+      rect:
+        serializedVersion: 2
+        x: 115
+        y: 75
+        width: 34
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: ddz_table_all1_46
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 35
+        width: 484
+        height: 26
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
