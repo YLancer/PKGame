@@ -145,8 +145,16 @@ namespace AssemblyCSharp
 		public const int CHUPAI_PDK_RESPONSE = 0xa2;//出牌通知_跑得快
 		public const int CHIBUQI_PDK_RESPONSE = 0xa3;//吃不起_跑得快
 
-		//斗牛
-		public const int QIANG_DN_REQUEST = 0xb1;
+        //  -lan    新增斗地主协议
+        public const int QIANG_DDZ_REQUEST = 0xa98;   //斗地主抢庄请求
+        public const int QIANG_DDZ_RESPONE = 0xa99;   //斗地主抢庄回调
+        public const int ZHUANG_DDZ_RESPONE = 0xa100;   //斗地主庄确定回调
+
+        public const int DDZ_TI_REQUEST = 0x110;    // 踢牌的请求
+        public const int DDZ_TI_RESPONE = 0x111;    // 踢牌回调
+
+        //斗牛
+        public const int QIANG_DN_REQUEST = 0xb1;
 		public const int QIANG_DN_RESPONSE = 0xb2;
 		public const int ZHUANG_DN_RESPONSE = 0xb3;
 		public const int ZHU_DN_REQUEST = 0xb4;

@@ -258,6 +258,10 @@ public class EnterRoomScript : MonoBehaviour
                 GlobalDataScript.gamePlayPanel = PrefabManage.loadPerfab("Prefab/Panel_GameDZPK");
             else if (GlobalDataScript.roomVo.gameType == (int)GameTypePK.DZPK &&GlobalDataScript.roomVo.AA== true)   //(int)GameTypePK.AMH
                 GlobalDataScript.gamePlayPanel = PrefabManage.loadPerfab("Prefab/Panel_GameAMH");
+            // 新增  斗地主的
+            else if(GlobalDataScript.roomVo.gameType == (int)GameTypePK.DDZ)
+                GlobalDataScript.gamePlayPanel = PrefabManage.loadPerfab("Prefab/Panel_GamePDK");
+
             //GlobalDataScript.gamePlayPanel = PrefabManage.loadPerfab(GlobalDataScript.playObject);
             //SocketEventHandle.getInstance().gameReadyNotice += GlobalDataScript.gamePlayPanel.GetComponent<MyMahjongScript>().gameReadyNotice;
             //GlobalDataScript.gamePlayPanel.GetComponent<MyMahjongScript>().joinToRoom(GlobalDataScript.roomJoinResponseData.playerList);

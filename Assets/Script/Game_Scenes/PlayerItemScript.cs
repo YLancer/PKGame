@@ -51,6 +51,8 @@ public class PlayerItemScript : MonoBehaviour
 
 	public GameObject mfbq;
 
+    public Image tiPai;
+
     // Use this for initialization
     void Start()
     {
@@ -177,7 +179,11 @@ public class PlayerItemScript : MonoBehaviour
     public void setbankImgEnable(bool flag)
     {
         bankerImg.enabled = flag;
+    }
 
+    public void setTiImage(bool isshow)             //判断是否显示踢字图片
+    {
+        tiPai.gameObject.SetActive(isshow);
     }
 
     public void showChatAction()
@@ -202,6 +208,7 @@ public class PlayerItemScript : MonoBehaviour
         Destroy(bankerImg.gameObject);
         Destroy(nameText.gameObject);
         Destroy(readyImg.gameObject);
+        Destroy(tiPai.gameObject);              //清除的时候  把踢牌图片清理 
     }
 
     /**设置游戏玩家离线**/

@@ -1260,7 +1260,7 @@ public class CrateRoomSettingScript : MonoBehaviour {
 
         sendVo.isKick=!ddzRules[8].isOn;
         sendVo.AA = ddzRules[10].isOn;
-        sendVo.gameType = (int)GameTypePK.PDK;   // 斗地主暂时寄生在跑得快下
+        sendVo.gameType = (int)GameTypePK.DDZ;                                // 斗地主暂时寄生在跑得快下
         string sendRoomMessage = JsonMapper.ToJson(sendVo);
         ReqForCreateRoom(sendRoomMessage);
     }
@@ -1288,16 +1288,16 @@ public class CrateRoomSettingScript : MonoBehaviour {
 
 			if (GlobalDataScript.roomVo.gameType == (int)GameTypePK.NULL)
                 GlobalDataScript.gamePlayPanel = PrefabManage.loadPerfab ("Prefab/Panel_GamePlay");
-			else if (GlobalDataScript.roomVo.gameType == (int)GameTypePK.PDK)
-                GlobalDataScript.gamePlayPanel = PrefabManage.loadPerfab ("Prefab/Panel_GamePDK");
-			else if (GlobalDataScript.roomVo.gameType == (int)GameTypePK.DN)
-                GlobalDataScript.gamePlayPanel = PrefabManage.loadPerfab ("Prefab/Panel_GameDN");
-			else if (GlobalDataScript.roomVo.gameType == (int)GameTypePK.DZPK && GlobalDataScript.roomVo.AA == false)
-                GlobalDataScript.gamePlayPanel = PrefabManage.loadPerfab ("Prefab/Panel_GameDZPK"); //Panel_GameDZPK
-            else if (GlobalDataScript.roomVo.gameType == (int)GameTypePK.DZPK && GlobalDataScript.roomVo.AA == true) //(int)GameTypePK.AMH
-                GlobalDataScript.gamePlayPanel = PrefabManage.loadPerfab("Prefab/Panel_GameAMH");
+			//else if (GlobalDataScript.roomVo.gameType == (int)GameTypePK.PDK)
+   //             GlobalDataScript.gamePlayPanel = PrefabManage.loadPerfab ("Prefab/Panel_GamePDK");
+			//else if (GlobalDataScript.roomVo.gameType == (int)GameTypePK.DN)
+   //             GlobalDataScript.gamePlayPanel = PrefabManage.loadPerfab ("Prefab/Panel_GameDN");
+			//else if (GlobalDataScript.roomVo.gameType == (int)GameTypePK.DZPK && GlobalDataScript.roomVo.AA == false)
+   //             GlobalDataScript.gamePlayPanel = PrefabManage.loadPerfab ("Prefab/Panel_GameDZPK"); //Panel_GameDZPK
+   //         else if (GlobalDataScript.roomVo.gameType == (int)GameTypePK.DZPK && GlobalDataScript.roomVo.AA == true) //(int)GameTypePK.AMH
+   //             GlobalDataScript.gamePlayPanel = PrefabManage.loadPerfab("Prefab/Panel_GameAMH");
             //  -lan   加载斗地主的预制件   暂定这样
-            else if(GlobalDataScript.roomVo.gameType ==(int)GameTypePK.PDK)
+            else if(GlobalDataScript.roomVo.gameType ==(int)GameTypePK.DDZ)
                 GlobalDataScript.gamePlayPanel = PrefabManage.loadPerfab("Prefab/Panel_GamePDK");
 
             closeDialog ();

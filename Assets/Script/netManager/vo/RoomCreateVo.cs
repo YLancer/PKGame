@@ -6,14 +6,14 @@ namespace AssemblyCSharp
 	[Serializable]
 	public class RoomCreateVo
 	{
-		public List<AvatarVO> playerList;
+		public List<AvatarVO> playerList;       
 
-		public  bool hong;
+        public  bool hong;
 		public int ma;
 		public int roomId;
 		public int roomType;//1转转；2、划水；3、长沙 ；4、广东
-		/**局数**/
-		public int roundNumber;
+		 /**局数**/
+        public int roundNumber;
 		public int currentRound;
 		public bool sevenDouble;
 		public int ziMo;//1：自摸胡；2、抢杠胡
@@ -71,9 +71,10 @@ namespace AssemblyCSharp
 		public bool zhang16 = true;//16张
 		public bool showPai = true;//显示牌
 		public bool xian3 = true;//先出黑桃3
+
         // 斗地主    -lan
         public int bombMultiple;     // 斗地主限制炸弹数目，在结算时用  1、4倍  2、5倍  3、6倍   4、无限制
-        public bool isKick =true;       // 踢为加倍
+        public bool isKick = true;   // 踢为加倍
 
         //斗牛
         public bool qiang = false;

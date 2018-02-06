@@ -124,6 +124,20 @@ public class pdkCardScript : MonoBehaviour, IPointerDownHandler,
 				pointImage.sprite = Resources.Load ("pdk/card/b_" + point, typeof(Sprite)) as Sprite;
 			else
 				pointImage.sprite = Resources.Load ("pdk/card/r_" + point, typeof(Sprite)) as Sprite;
+            //-lan   48张牌的值变成54张牌的值
+            if(_cardPoint ==52)
+            {
+                cardPoint = _cardPoint;
+                kingCenterImage.sprite = Resources.Load("pdk/card/" + "20_1", typeof(Sprite)) as Sprite;
+                kingPointImage.sprite = Resources.Load("pdk/card/" + "20_2", typeof(Sprite)) as Sprite;
+            }
+            else if(_cardPoint ==53)
+            {
+                cardPoint = _cardPoint;
+                kingCenterImage.sprite = Resources.Load("pdk/card/" + "21_1", typeof(Sprite)) as Sprite;
+                kingPointImage.sprite = Resources.Load("pdk/card/" + "21_2", typeof(Sprite)) as Sprite;
+            }
+
 		} else if (gameType == 3) {
 			GlobalDataScript.isDrag = false;
 			if (_cardPoint == 52) {

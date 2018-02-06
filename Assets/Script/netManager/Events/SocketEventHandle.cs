@@ -68,8 +68,12 @@ namespace AssemblyCSharp
 		public ServerCallBackEvent PDK_putOutCardCallBack;//出牌通知
 		public ServerCallBackEvent PDK_ChiBuQiCallBack;//吃不起通知
 
-		// 斗牛
-		public ServerCallBackEvent DN_qiangResponse;
+        //  -lan 斗地主
+        public ServerCallBackEvent DDZ_qiangResponse;
+        public ServerCallBackEvent DDZ_zhuangResponse; //庄家确定通知
+        public ServerCallBackEvent DDZ_TIResponse;     //踢牌的通知
+        // 斗牛
+        public ServerCallBackEvent DN_qiangResponse;
 		public ServerCallBackEvent DN_zhuangResponse; //庄家确定通知
 		public ServerCallBackEvent DN_xiaZhuResponse;
 		public ServerCallBackEvent DN_niuResponse; //庄家确定通知
@@ -386,20 +390,40 @@ namespace AssemblyCSharp
 					otherTeleLogin (response);
 				}
 				break;
-			case APIS.QIANG_DN_RESPONSE:
-				if (DN_qiangResponse != null) {
-					DN_qiangResponse (response);
-				}
-				break;
+
+            case APIS.QIANG_DDZ_RESPONE:        // 斗地主抢庄的回调
+                if (DDZ_qiangResponse != null)
+                {
+                    DDZ_qiangResponse(response);
+                }
+                break;
+            case APIS.ZHUANG_DDZ_RESPONE:      // 斗地主确定庄的回调
+                if(DDZ_zhuangResponse !=null)
+                {
+                    DDZ_zhuangResponse(response);
+                }
+                break;
+
+            case APIS.QIANG_DN_RESPONSE:
+			if (DN_qiangResponse != null) {
+				DN_qiangResponse (response);
+			}
+			    break;
 			case APIS.ZHUANG_DN_RESPONSE:
 				if (DN_zhuangResponse != null) {
 					DN_zhuangResponse (response);
 				}
 				break;
-			case APIS.ZHU_DN_RESPONSE:
-				if (DN_xiaZhuResponse != null) {
-					DN_xiaZhuResponse (response);
-				}
+            case APIS.DDZ_TI_RESPONE:             // 斗地主踢牌请求
+                if (DDZ_TIResponse != null)
+                {
+                   DDZ_TIResponse(response);
+                }
+                break;
+            case APIS.ZHU_DN_RESPONSE:
+			   if (DN_xiaZhuResponse != null) {
+				DN_xiaZhuResponse (response);
+		     	}
 				break;
 			case APIS.NIU_DN_RESPONSE:
 				if (DN_niuResponse != null) {

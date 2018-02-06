@@ -35,6 +35,8 @@ namespace AssemblyCSharp
         AMH = 5,  // 未用到    奥马哈和德扑用AA 来区分
 
         Tensanshui =6,
+
+        DDZ=7,
     }
 
 
