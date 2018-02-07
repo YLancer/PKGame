@@ -576,7 +576,7 @@ public class WechatOperateScript : MonoBehaviour {
 			customizeShareParams.SetImageUrl(APIS.baseUrl + "/download/logo.png");
 			customizeShareParams.SetShareType(ContentType.Webpage);//ContentType.Webpage
 			customizeShareParams.SetObjectID("");
-			shareSdk.ShareContent(PlatformType.WeChat, customizeShareParams);
+			shareSdk.ShowShareContentEditor(PlatformType.WeChat, customizeShareParams);
 		}
 	}
 
@@ -593,7 +593,7 @@ public class WechatOperateScript : MonoBehaviour {
 		customizeShareParams.SetImageUrl(APIS.baseUrl + "/download/logo.png");
 		customizeShareParams.SetShareType(ContentType.Webpage);
 		customizeShareParams.SetObjectID("");
-		shareSdk.ShareContent(platformtype, customizeShareParams);
+		shareSdk.ShowShareContentEditor(platformtype, customizeShareParams);
 	}
 
 

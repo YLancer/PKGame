@@ -1260,17 +1260,19 @@ public class CrateRoomSettingScript : MonoBehaviour {
 
         sendVo.isKick=!ddzRules[8].isOn;
         sendVo.AA = ddzRules[10].isOn;
-        sendVo.gameType = (int)GameTypePK.DDZ;                                // 斗地主暂时寄生在跑得快下
+        sendVo.gameType = (int)GameTypePK.DDZ;                                
         string sendRoomMessage = JsonMapper.ToJson(sendVo);
+        print(" +++++createDDZRoom+++++++++++ " + sendRoomMessage);
         ReqForCreateRoom(sendRoomMessage);
     }
 
-    public void onCreateRoomCallback(ClientResponse response){
+    public void onCreateRoomCallback(ClientResponse response){     // response.message 在创建房间阶段为房间号  response.headCode每个人的手牌数
         if (watingPanel != null) {
         	watingPanel.gameObject.SetActive(false);
         }
         MyDebug.Log (response.message);
-		if (response.status == 1) {
+        print(" ++++++++++++++++++++++++++onCreateRoomCallback+++++_________________________+++++++" + response.status);
+        if (response.status == 1) {
 			//RoomCreateResponseVo responseVO = JsonMapper.ToObject<RoomCreateResponseVo> (response.message);
 			int roomid = Int32.Parse(response.message);
 			sendVo.roomId = roomid;

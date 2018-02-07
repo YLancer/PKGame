@@ -2,7 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 using AssemblyCSharp;
-using System;//Math.Abs
+using System;//Math.Abs 
+using System.Collections.Generic;
 
 public class PlayerItemScript : MonoBehaviour
 {
@@ -52,8 +53,7 @@ public class PlayerItemScript : MonoBehaviour
 	public GameObject mfbq;
 
     public Image tiPai;
-
-    // Use this for initialization
+    public Transform handCard;  
     void Start()
     {
 		avaCurZhu_dzpk = 0;

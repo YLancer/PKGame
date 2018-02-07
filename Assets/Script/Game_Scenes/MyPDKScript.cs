@@ -180,8 +180,9 @@ public class MyPDKScript : MonoBehaviour
 		Event e = Event.current;
 		if (e.isMouse && (e.clickCount == 2)) {
 			MyDebug.Log ("用户双击了鼠标");
-			if (handerCardList != null && handerCardList.Count > 0) {
-				cardReset ();
+            if (handerCardList != null && handerCardList.Count > 0)              // -lan  根据玩家确定手牌
+            {
+                cardReset ();
 				isCanChu ();
 			}
 		}		        
@@ -267,21 +268,23 @@ public class MyPDKScript : MonoBehaviour
 
 	private void openGameOverPanelSignal ()
 	{//单局结算
-		//setAllPlayerHuImgVisbleToFalse ();
-
-		GameObject obj = PrefabManage.loadPerfab ("Prefab/Panel_Game_Over");
+        //setAllPlayerHuImgVisbleToFalse ();
+        
+        GameObject obj = PrefabManage.loadPerfab ("Prefab/Panel_Game_Over");
 
 		getDirection (bankerId);
 		playerItems [curDirIndex].setbankImgEnable (false);
         playerItems[curDirIndex].setTiImage(false);
-        if (handerCardList != null && handerCardList.Count > 0 && handerCardList [0].Count > 0) {
-			for (int i = 0; i < handerCardList [0].Count; i++) {
-				handerCardList [0] [i].GetComponent<pdkCardScript> ().onDragSelect -= dragSelect;
-				handerCardList [0] [i].GetComponent<pdkCardScript> ().onCardSelect -= cardSelect;
-			}
-		}
+        if (handerCardList != null && handerCardList.Count > 0 && handerCardList[0].Count > 0)
+        {
+            for (int i = 0; i < handerCardList[0].Count; i++)
+            {
+                handerCardList[0][i].GetComponent<pdkCardScript>().onDragSelect -= dragSelect;
+                handerCardList[0][i].GetComponent<pdkCardScript>().onCardSelect -= cardSelect;
+            }
+        }
 
-		initPanel ();
+        initPanel ();
 		obj.GetComponent<GameOverScript> ().setDisplayContent_pdk (0, avatarList, null, null);
 		GlobalDataScript.singalGameOverList.Add (obj);
 		avatarList [bankerId].main = false;
@@ -302,7 +305,7 @@ public class MyPDKScript : MonoBehaviour
         int uuid = Convert.ToInt32(response.message);                                   // 这是已经操作，服务器返回的玩家uuid？   
         int index = getIndexByDir(getDirection( getIndex(uuid)));
         print(" +++++DDZ_qiangResponse+++++" + response.message + "-------" + uuid);
-        if (uuid == GlobalDataScript.loginResponseData.account.uuid && index ==0)                    //uuid == GlobalDataScript.loginResponseData.account.uuid
+        if (uuid == GlobalDataScript.loginResponseData.account.uuid && index ==0)                    
         {
             panel_landlordChoose.SetActive(false);
             panel_Ti.SetActive(true);
@@ -318,6 +321,8 @@ public class MyPDKScript : MonoBehaviour
             panel_landlordChoose.SetActive(true);
             currentIndex = 0;
         }
+
+        // 根据传回来的值判断   1分   2分   3分   能否再被点击
     }
 
     // 庄家确定回调
@@ -326,10 +331,10 @@ public class MyPDKScript : MonoBehaviour
         bankerId = Convert.ToInt32(response.message);
         curDirString = getDirection(bankerId);
         avatarList[bankerId].main = true;
-        int bankerInedx = getIndexByDir(getDirection(bankerId));
-        playerItems[bankerInedx].setbankImgEnable(true);
+        int bankerIdInedx = getIndexByDir(getDirection(bankerId));
+        playerItems[bankerIdInedx].setbankImgEnable(true);
         // todo  确定了谁是庄家  将桌面上的牌  移到庄家手里
-
+        bankerAddCard(bankerIdInedx);
     }
 
     // 是否踢牌    true踢即为加1倍    false不踢即为不再加倍,为0
@@ -370,7 +375,8 @@ public class MyPDKScript : MonoBehaviour
 	/// </summary>
 	public void clean ()
 	{
-		cleanArrayList (handerCardList);
+        // -lan  change
+        cleanArrayList (handerCardList);
 
 		//去除打出的牌
 		for (int i = 0; i < 3; i++) {
@@ -616,9 +622,9 @@ public class MyPDKScript : MonoBehaviour
 	}
 
 	public void TiShi ()
-	{
+	{ 
 		List<int> pai = new List<int> ();
-		for (int i = handerCardList [0].Count - 1; i >= 0; i--) {
+		for (int i =handerCardList [0].Count - 1; i >= 0; i--) {
 			GameObject gob = handerCardList [0] [i];
 			if (gob != null) {
 				pai.Add (gob.GetComponent<pdkCardScript> ().getPoint ());
@@ -706,7 +712,7 @@ public class MyPDKScript : MonoBehaviour
 				//要2个杂牌起立
 				count = 0;
 				for (int i = handerCardList [0].Count - 1; i >= 0; i--) {
-					GameObject gob = handerCardList [0] [i];
+					GameObject gob =handerCardList [0] [i];
 					if (gob != null) {
 						pdkCardScript pcs = gob.GetComponent<pdkCardScript> ();
 						if (!pcs.selected) {
@@ -756,7 +762,7 @@ public class MyPDKScript : MonoBehaviour
 
 			if (re [0] == 4 && re.Length == 2) {//炸弹
 				int count = 0;
-				for (int i = handerCardList [0].Count - 1; i >= 0; i--) {
+				for (int i =handerCardList [0].Count - 1; i >= 0; i--) {
 					GameObject gob = handerCardList [0] [i];
 					if (gob != null) {
 						pdkCardScript pcs = gob.GetComponent<pdkCardScript> ();
@@ -772,7 +778,7 @@ public class MyPDKScript : MonoBehaviour
 			} else {//连对
 				for (int j = 1; j < re.Length; j++) {
 					int count = 0;
-					for (int i = handerCardList [0].Count - 1; i >= 0; i--) {
+					for (int i =handerCardList [0].Count - 1; i >= 0; i--) {
 						GameObject gob = handerCardList [0] [i];
 						if (gob != null) {
 							pdkCardScript pcs = gob.GetComponent<pdkCardScript> ();
@@ -1109,14 +1115,13 @@ public class MyPDKScript : MonoBehaviour
 	public void putOutCard ()
 	{
 		pdkCardVO cardvo = new pdkCardVO ();
-
 		List<int> pai = new List<int> ();
 		for (int i = 0; i < handerCardList [0].Count; i++) {
 			GameObject gob = handerCardList [0] [i];
 			if (gob != null) {
 				if (gob.GetComponent<pdkCardScript> ().selected) {
 					pai.Add (gob.GetComponent<pdkCardScript> ().getPoint ());
-					handerCardList [0].Remove (gob);
+                    handerCardList [0].Remove (gob);
 					Destroy (gob);
 					i--;
 				}
@@ -1216,11 +1221,11 @@ public class MyPDKScript : MonoBehaviour
 
 	public void SetPosition ()//设置位置
 	{
-		int count = handerCardList [0].Count;
+		int count =handerCardList [0].Count;
 		int startX = -370 + (16 - count) / 2 * 50;
 
 		for (int i = 0; i < count; i++) {
-			handerCardList [0] [i].transform.localPosition = new Vector3 (startX + i * 50f, 0); //从左到右依次对齐
+           handerCardList [0] [i].transform.localPosition = new Vector3 (startX + i * 50f, 0); //从左到右依次对齐
 		}
 	}
 
@@ -1282,11 +1287,12 @@ public class MyPDKScript : MonoBehaviour
 
 	private void initArrayList ()
 	{
+        //  -change -lan
 		mineList = new List<List<int>> ();
-		handerCardList = new List<List<GameObject>> ();
+        handerCardList = new List<List<GameObject>> ();
 		//tableCardList = new List<List<GameObject>> ();
 		for (int i = 0; i < 3; i++) {
-			handerCardList.Add (new List<GameObject> ());
+            handerCardList.Add (new List<GameObject> ());
 			//tableCardList.Add (new List<GameObject> ());
 		}
 
@@ -1312,28 +1318,33 @@ public class MyPDKScript : MonoBehaviour
 		initOtherCardList (DirectionEnum.Right, rightCount);
 	}
 
-	private void displaySelfhanderCard ()                  //-lan  自己的手牌 
+	private void displaySelfhanderCard ()                  //-lan  自己的手牌     change   
     {
-		int count = 0;
+        int index = getMyIndexFromList();
+        int count = 0;
 		//for (int i = 12; i >= 0; i--) {
 			//for (int j = 0; j < 4; j++) {
             for(int point = 0; point < 52; point++) {            //todo  牌的数值好像有问题
-				//int point = i + 13 * j;
-				if (mineList [0] [point] == 1) {
+              //int point = i + 13 * j;
+            if (mineList[0][point] == 1) {
+                print(" +++++-----displaySelfhanderCard------++++++++++" + point);
 					GameObject gob = Instantiate (Resources.Load ("prefab/pdk/HandCard")) as GameObject;
 					if (gob != null) {
 						gob.GetComponent<pdkCardScript> ().onDragSelect += dragSelect;
 						gob.GetComponent<pdkCardScript> ().onCardSelect += cardSelect;
-						gob.transform.SetParent (handTransformList [0]);
+                    //gob.transform.SetParent (handTransformList [0]);                     
+                        gob.transform.SetParent(playerItems[index].handCard);
 						gob.GetComponent<pdkCardScript> ().setPoint (point);
 						gob.transform.localPosition = new Vector3 (-370 + count * 50f, 0, 0);
-						handerCardList [0].Add (gob);
+                        handerCardList[0].Add (gob);
 						count++;
 					}
 				}
                 else{                     // 桌面上增加的牌
                 GameObject gob_back = Instantiate(Resources.Load("prefab/pdk/HandCard_Back")) as GameObject;
                 if (gob_back != null){
+                    gob_back.GetComponent<pdkCardScript>().onDragSelect += dragSelect;        // 暂时放在这   有问题
+                    gob_back.GetComponent<pdkCardScript>().onCardSelect += cardSelect;        //
                     gob_back.transform.SetParent(landlord_TransformList);
                     gob_back.GetComponent<pdkCardScript>().setPoint(point);
                     landlord_deskCardList.Add(gob_back);
@@ -1356,11 +1367,48 @@ public class MyPDKScript : MonoBehaviour
 		}
 	}
 
-	/// <summary>
-	/// 
-	/// </summary>
-	/// <param name="initDirection"></param>
-	private void initOtherCardList (string initDiretion, int count) //初始化
+    /* 庄家增加四张牌*/
+    void bankerAddCard(int bankerIndex)
+    {
+        int index = getMyIndexFromList();
+        float time = 0.1f;
+        if (index == bankerIndex)
+        {
+            for (int i = 0; i < landlord_deskCardList.Count - 1; i++)
+            {
+                GameObject deskCard= landlord_deskCardList[i];
+                StartCoroutine(FanPai(time, deskCard));
+                handerCardList[0].Add(deskCard);
+                deskCard.transform.SetParent(playerItems[bankerIndex].handCard);
+                for( int d=0;d < handerCardList[0].Count-1;d++)
+                {
+                    GameObject handcardGameObject = handerCardList[0][d];                                              
+                    if (deskCard.GetComponent<pdkCardScript>().getPoint() >= handcardGameObject.GetComponent<pdkCardScript>().getPoint())
+                    {//  z桌面地主牌，和地主手里每张牌的值进行比较，进行插入
+                        deskCard.transform.SetSiblingIndex(d);
+                        deskCard.transform.localScale = Vector3.one;
+                    }
+                }
+                landlord_deskCardList.Remove(landlord_deskCardList[i]);
+            }
+        }
+        playerItems[bankerIndex].showPaiCountText(int.Parse(playerItems[bankerIndex].paiCountText.text) + 4);
+    }
+
+    IEnumerator FanPai(float time, GameObject go)
+    {
+        yield return new WaitForSeconds(time);
+        if (go.GetComponent<pdkCardScript>().cardPoint != -1)
+        {
+            go.GetComponent<pdkCardScript>().startPlay();
+        }
+    }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="initDirection"></param>
+    private void initOtherCardList (string initDiretion, int count) //初始化
 	{
 		switch (initDiretion) {
 		case DirectionEnum.Left: //左
@@ -1379,8 +1427,8 @@ public class MyPDKScript : MonoBehaviour
 	/// <param name="obj">Object.</param>
 	public void dragSelect (GameObject gameobject)
 	{
-		for (int i = 0; i < handerCardList [0].Count; i++) {
-			GameObject obj = handerCardList [0] [i];
+		for (int i = 0; i <handerCardList [0].Count; i++) {
+			GameObject obj =handerCardList [0] [i];
 			if (obj != null) {
 				if (obj.GetComponent<pdkCardScript> ().dragFlag) {
 					pdkCardScript script = obj.transform.GetComponent<pdkCardScript> ();
@@ -1422,8 +1470,8 @@ public class MyPDKScript : MonoBehaviour
 	public void isCanChu ()
 	{
 		List<int> pai = new List<int> ();
-		for (int i = 0; i < handerCardList [0].Count; i++) {
-			GameObject gob = handerCardList [0] [i];
+        for (int i = 0; i < handerCardList [0].Count; i++) {
+			GameObject gob =handerCardList [0] [i];
 			if (gob != null) {
 				if (gob.GetComponent<pdkCardScript> ().selected) {
 					pai.Add (gob.GetComponent<pdkCardScript> ().getPoint ());
@@ -1499,12 +1547,12 @@ public class MyPDKScript : MonoBehaviour
 	{
 		for (int i = 0; i < handerCardList [0].Count; i++) {
 			if (handerCardList [0] [i] == null) {
-				handerCardList [0].RemoveAt (i);
+                handerCardList [0].RemoveAt (i);
 				i--;
 			} else {
-				handerCardList [0] [i].transform.localPosition = new Vector3 (handerCardList [0] [i].transform.localPosition.x, 0);
-				handerCardList [0] [i].transform.GetComponent<pdkCardScript> ().selected = false;
-				handerCardList [0] [i].transform.GetComponent<pdkCardScript> ().dragFlag = false;
+                handerCardList [0] [i].transform.localPosition = new Vector3 (handerCardList [0] [i].transform.localPosition.x, 0);
+                handerCardList [0] [i].transform.GetComponent<pdkCardScript> ().selected = false;
+                handerCardList [0] [i].transform.GetComponent<pdkCardScript> ().dragFlag = false;
 			}
 		}
 	}
