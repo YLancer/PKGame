@@ -7,13 +7,11 @@ namespace AssemblyCSharp
     {
         public APIS()
         {
-        }
-        //public static string baseUrl = "http://mj.wapvc.cn";
-        //public static string baseUrl = "xw.y6pay.com";
+        }    
         //public static string baseUrl = "192.168.0.100";
-        public static string baseUrl = "103.26.79.31";
-
-		public static string UPDATE_INFO_JSON_URL = baseUrl + "/download/update.xml";//服务器上最新的软件版本信息存储文件
+        //public static string baseUrl = "103.26.79.31";
+        public static string baseUrl = "61.160.195.183";
+        public static string UPDATE_INFO_JSON_URL = baseUrl + "/download/update.xml";//服务器上最新的软件版本信息存储文件
 		public static string GD_URL = baseUrl + "/xxadmin/images/guanggao.png";//广告图片
 
 
@@ -24,11 +22,11 @@ namespace AssemblyCSharp
         //		public static string chatSocketUrl = "mj.wapvc.cn"; 
         //		public static string socketUrl = "mj.wapvc.cn";
 
-        //public static string chatSocketUrl = "192.168.0.100";
-        //public static string socketUrl = "192.168.0.100";
+        public static string chatSocketUrl = "61.160.195.183";
+        public static string socketUrl = "61.160.195.183";
 
-        public static string chatSocketUrl = "103.26.79.31";
-        public static string socketUrl = "103.26.79.31";
+        //public static string chatSocketUrl = "103.26.79.31";
+        //public static string socketUrl = "103.26.79.31";
 
         //public static string chatSocketUrl = "skyl.shenkongjian.com";4
         //public static string socketUrl = "skyl.shenkongjian.com";
@@ -39,7 +37,10 @@ namespace AssemblyCSharp
         public const int socketPort = 10122;
         public const int chatPort = 10112;
 
-		public static string PIC_PATH = baseUrl + "/download/";
+        //public const int socketPort = 2016;
+        //public const int chatPort = 2016;
+
+        public static string PIC_PATH = baseUrl + "/download/";
         //	public const string apkDownLoadurl="192.168.0.111/aaa/weipai.apk";
 		public static string ImgUrl = baseUrl + "/weiPaiImage/";
         public const int head = 0x000030;
@@ -145,13 +146,42 @@ namespace AssemblyCSharp
 		public const int CHUPAI_PDK_RESPONSE = 0xa2;//出牌通知_跑得快
 		public const int CHIBUQI_PDK_RESPONSE = 0xa3;//吃不起_跑得快
 
+
+
+
+
+
+
+
         //  -lan    新增斗地主协议
+        public const int LANDLORD_CREATE_ROOM_REQUEST= 0x90009;    // 创建房间请求
+        public const int LANDLORD_JOIN_ROOM_REQUEST = 0x90010;     // 加入房间的请求
+
+        public const int LANDLORD_CREATE_ROOM_RRESPONSE = 0x90019;   // 创建房间返回的通知
+        public const int LANDLORD_JOIN_ROOM_RRESPONSE = 0x90020;     // 加入房间的返回通知
+
+        public const int LANDLORD_OTHER_JOIN_ROOM_NOICE = 0x90021;//其它 人加入房间通知
+
+        public const int LANDLORDS_READY_REQUEST = 0x90001;  //斗地主准备请求
+        public const int LANDLORDS_READY_RESPONSE = 0x90011;  //斗地主准备回调
+
         public const int QIANG_DDZ_REQUEST = 0xa98;   //斗地主抢庄请求
         public const int QIANG_DDZ_RESPONE = 0xa99;   //斗地主抢庄回调
         public const int ZHUANG_DDZ_RESPONE = 0xa100;   //斗地主庄确定回调
 
         public const int DDZ_TI_REQUEST = 0x110;    // 踢牌的请求
         public const int DDZ_TI_RESPONE = 0x111;    // 踢牌回调
+
+      
+
+
+
+
+
+
+
+
+
 
         //斗牛
         public const int QIANG_DN_REQUEST = 0xb1;

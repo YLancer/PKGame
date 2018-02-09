@@ -21,8 +21,6 @@ namespace AssemblyCSharp
 
 		}
 
-
-
 		/// <summary>
 		/// 写入大端序的int
 		/// </summary>

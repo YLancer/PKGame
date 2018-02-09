@@ -177,12 +177,12 @@ namespace AssemblyCSharp
 					LoginCallBack(response);
 				}
 				break;
-			case APIS.CREATEROOM_RESPONSE:
+            case APIS.LANDLORD_CREATE_ROOM_RRESPONSE:         	//case APIS.CREATEROOM_RESPONSE:原本创建房间的返回
 				if (CreateRoomCallBack != null) {
 					CreateRoomCallBack(response);
 				}
 				break;
-			case APIS.JOIN_ROOM_RESPONSE:
+            case APIS.LANDLORD_JOIN_ROOM_RRESPONSE:             //case APIS.JOIN_ROOM_RESPONSE:原本加入房间的返回
 				if (JoinRoomCallBack != null) {
 					JoinRoomCallBack(response);
 				}
@@ -217,7 +217,7 @@ namespace AssemblyCSharp
 					PDK_ChiBuQiCallBack (response);
 				}
 				break;
-			case APIS.JOIN_ROOM_NOICE:
+            case APIS.LANDLORD_OTHER_JOIN_ROOM_NOICE:      //case APIS.JOIN_ROOM_NOICE:     原本其他玩家加入房间的返回
 				if (otherUserJointRoomCallBack != null) {
 					otherUserJointRoomCallBack (response);
 				}
@@ -284,8 +284,8 @@ namespace AssemblyCSharp
 					dissoliveRoomResponse (response);
 				}
 				break;
-			case APIS.PrepareGame_MSG_RESPONSE:
-				if (gameReadyNotice != null) {
+                case APIS.LANDLORDS_READY_RESPONSE:                               //case APIS.PrepareGame_MSG_RESPONSE:原本游戏准备回调事件
+                if (gameReadyNotice != null) {
 					gameReadyNotice (response);
 				}
 				break;

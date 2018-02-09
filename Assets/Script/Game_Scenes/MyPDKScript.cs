@@ -117,6 +117,7 @@ public class MyPDKScript : MonoBehaviour
 			GlobalDataScript.loginResponseData.roomId = GlobalDataScript.reEnterRoomData.roomId;
 			reEnterRoom ();
 		} else if (GlobalDataScript.roomJoinResponseData != null) {//进入他人房间
+            print("------- GlobalDataScript.roomJoinResponseData.playerList +++++ "+ GlobalDataScript.roomJoinResponseData.playerList.Count);
 			joinToRoom (GlobalDataScript.roomJoinResponseData.playerList);
 		} else {//创建房间
 			createRoomAddAvatarVO (GlobalDataScript.loginResponseData);
@@ -300,7 +301,7 @@ public class MyPDKScript : MonoBehaviour
     }
 
      // 斗地主抢庄回调    -lan
-    void DDZ_qiangResponse(ClientResponse response)            
+    void DDZ_qiangResponse(ClientResponse response)                                   //response.message 传回来uuid 和 几分已经被选择        
     {
         int uuid = Convert.ToInt32(response.message);                                   // 这是已经操作，服务器返回的玩家uuid？   
         int index = getIndexByDir(getDirection( getIndex(uuid)));
@@ -311,13 +312,18 @@ public class MyPDKScript : MonoBehaviour
             panel_Ti.SetActive(true);
             currentIndex = 1;
         }
+        // 根据已被选择的值                                                         
+        difen_x1.interactable =true;
+        difen_x2.interactable = true;
+        difen_x3.interactable = true;
+
         if (index == 1)
-        {//下家出牌
+        {//下家
             panel_landlordChoose.SetActive(true);
             currentIndex = 2;
         }
         else if(index == 2)
-        {//上家出牌
+        {//上家
             panel_landlordChoose.SetActive(true);
             currentIndex = 0;
         }
@@ -326,9 +332,9 @@ public class MyPDKScript : MonoBehaviour
     }
 
     // 庄家确定回调
-    void DDZ_zhuangResponse(ClientResponse response)
+    void DDZ_zhuangResponse(ClientResponse response)   
     {
-        bankerId = Convert.ToInt32(response.message);
+        bankerId = Convert.ToInt32(response.message);        
         curDirString = getDirection(bankerId);
         avatarList[bankerId].main = true;
         int bankerIdInedx = getIndexByDir(getDirection(bankerId));
@@ -1581,7 +1587,6 @@ public class MyPDKScript : MonoBehaviour
 			seatIndex = 3 + seatIndex;
 		}
 
-
 		//自己
 		if (avatarIndex == myIndex) {
 			markselfReadyGame ();
@@ -1876,8 +1881,8 @@ public class MyPDKScript : MonoBehaviour
 	/// <param name="avatar">Avatar.</param>
 	private void setSeat (AvatarVO avatar)
 	{
-		//游戏结束后用的数据，勿删！！！
-
+        //游戏结束后用的数据，勿删！！！
+        print("setSeat++++++++++++++++++++++++++" + avatar);
 		//GlobalDataScript.palyerBaseInfo.Add (avatar.account.uuid, avatar.account);
 
 		if (avatar.account.uuid == GlobalDataScript.loginResponseData.account.uuid) {
@@ -1891,7 +1896,8 @@ public class MyPDKScript : MonoBehaviour
 					seatIndex = 4 + seatIndex;
 				else if (GlobalDataScript.roomVo.gameType == 1)
 					seatIndex = 3 + seatIndex;
-			}
+			} 
+            //   存在问题       报错
 			playerItems [seatIndex].setAvatarVo (avatar);
 		}
 

@@ -59,7 +59,7 @@ public class ChatSocket{
 			//防止延迟,即时发送!
 			tcpclient.NoDelay = true;
 			tcpclient.BeginConnect(APIS.chatSocketUrl, APIS.chatPort, new AsyncCallback(ConnectCallback), tcpclient);
-            MyDebug.Log("--chatSocketUrl-------开始连接-----" + APIS.chatSocketUrl + "------" + 10112);
+            MyDebug.Log("--chatSocketUrl-------开始连接-----" + APIS.chatSocketUrl + "------" + APIS.chatPort);
 		}
 		catch(Exception ex)
 		{

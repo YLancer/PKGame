@@ -1271,8 +1271,8 @@ public class CrateRoomSettingScript : MonoBehaviour {
         	watingPanel.gameObject.SetActive(false);
         }
         MyDebug.Log (response.message);
-        print(" ++++++++++++++++++++++++++onCreateRoomCallback+++++_________________________+++++++" + response.status);
-        if (response.status == 1) {
+        if(response.message !=null)   //if (response.status == 1)
+        {
 			//RoomCreateResponseVo responseVO = JsonMapper.ToObject<RoomCreateResponseVo> (response.message);
 			int roomid = Int32.Parse(response.message);
 			sendVo.roomId = roomid;
@@ -1284,7 +1284,6 @@ public class CrateRoomSettingScript : MonoBehaviour {
 			GlobalDataScript.loginResponseData.isOnLine = true;
 			GlobalDataScript.reEnterRoomData=null;
 			//SceneManager.LoadSceneAsync(1);
-
 
 			saveDefaultSet (GlobalDataScript.userGameType, userDefaultSet);
 
