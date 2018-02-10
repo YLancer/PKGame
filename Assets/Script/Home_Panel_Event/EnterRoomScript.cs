@@ -161,7 +161,7 @@ public class EnterRoomScript : MonoBehaviour
 
 
         String roomNumber = inputChars[0] + inputChars[1] + inputChars[2] + inputChars[3] + inputChars[4] + inputChars[5];
-        MyDebug.Log(roomNumber);
+        MyDebug.Log(roomNumber+"此处加入房间输入房间号，并发送到服务器判断是否有此房间存在");
         RoomJoinVo roomJoinVo = new RoomJoinVo();
         roomJoinVo.roomId = int.Parse(roomNumber);
         string sendMsg = JsonMapper.ToJson(roomJoinVo);
@@ -200,10 +200,11 @@ public class EnterRoomScript : MonoBehaviour
     public void onJoinRoomCallBack(ClientResponse response)
     {
         watingPanel.gameObject.SetActive(false);
-        MyDebug.Log(response);
-        if (response.status == 1)
+        MyDebug.Log(response+ "--------------onJoinRoomCallBackonJoinRoomCallBack----此处加入房间，返回已创建的房间信息");
+        //if (response.status == 1)
+        if (response.message != null)
         {
-			GlobalDataScript.roomJoinResponseData = JsonMapper.ToObject<RoomCreateVo>(response.message);
+			GlobalDataScript.roomJoinResponseData = JsonMapper.ToObject<RoomCreateVo>(response.message);    //  此处存在问题   服务器传回来数据不对  建议参考原服务器传递数值
             
 			GlobalDataScript.roomVo = GlobalDataScript.roomJoinResponseData;
 			/*
