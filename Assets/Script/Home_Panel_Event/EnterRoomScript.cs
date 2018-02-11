@@ -200,7 +200,7 @@ public class EnterRoomScript : MonoBehaviour
     public void onJoinRoomCallBack(ClientResponse response)
     {
         watingPanel.gameObject.SetActive(false);
-        MyDebug.Log(response+ "--------------onJoinRoomCallBackonJoinRoomCallBack----此处加入房间，返回已创建的房间信息");
+        MyDebug.Log(response+ "--------------onJoinRoomCallBackonJoinRoomCallBack----此处加入房间，返回已创建的房间信息"+ response.message);
         //if (response.status == 1)
         if (response.message != null)
         {

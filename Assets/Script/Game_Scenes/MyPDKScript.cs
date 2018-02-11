@@ -1580,7 +1580,8 @@ public class MyPDKScript : MonoBehaviour
 	public void gameReadyNotice (ClientResponse response)
 	{
 		JsonData json = JsonMapper.ToObject (response.message);
-		int avatarIndex = Int32.Parse (json ["avatarIndex"].ToString ());
+        print(" +++++++++++++++++gameReadyNotice++++++++++++++++++++++++++++++" + response.message);
+        int avatarIndex = Int32.Parse (json ["avatarIndex"].ToString ());
 		int myIndex = getMyIndexFromList ();
 		int seatIndex = avatarIndex - myIndex;
 		if (seatIndex < 0) {
@@ -1792,6 +1793,7 @@ public class MyPDKScript : MonoBehaviour
 			setSeat (avatars [i]);
 		}
 		setRoomRemark ();
+        print(" ++++++joinToRoom+++++" + avatars.Count + "-----------" + avatarList);
 		//readyGame ();
 		//markselfReadyGame ();
 	}
@@ -1882,7 +1884,6 @@ public class MyPDKScript : MonoBehaviour
 	private void setSeat (AvatarVO avatar)
 	{
         //游戏结束后用的数据，勿删！！！
-        print("setSeat++++++++++++++++++++++++++" + avatar);
 		//GlobalDataScript.palyerBaseInfo.Add (avatar.account.uuid, avatar.account);
 
 		if (avatar.account.uuid == GlobalDataScript.loginResponseData.account.uuid) {
@@ -1890,13 +1891,17 @@ public class MyPDKScript : MonoBehaviour
 		} else {
 			int myIndex = getMyIndexFromList ();
 			int curAvaIndex = avatarList.IndexOf (avatar);
+            print("+++++++setSeat+++"+myIndex +"------------------- "+ curAvaIndex);
 			int seatIndex = curAvaIndex - myIndex;
 			if (seatIndex < 0) {
 				if (GlobalDataScript.roomVo.gameType == 0)
 					seatIndex = 4 + seatIndex;
 				else if (GlobalDataScript.roomVo.gameType == 1)
 					seatIndex = 3 + seatIndex;
-			} 
+                else if (GlobalDataScript.roomVo.gameType == (int)GameTypePK.DDZ)   // 斗地主  7  待定
+                    seatIndex = 3 + seatIndex;
+
+            } 
             //   存在问题       报错
 			playerItems [seatIndex].setAvatarVo (avatar);
 		}
