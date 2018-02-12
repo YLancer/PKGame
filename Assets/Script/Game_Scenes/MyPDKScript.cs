@@ -292,13 +292,12 @@ public class MyPDKScript : MonoBehaviour
 	}
 
     // 斗地主从房主开始抢庄    -lan
-    public void qiangzhuang_DDZ(int points)    
+    public void qiangzhuang_DDZ(bool isJiao)    
     {
-        print("++++++++qiangzhuang_DDZ+++++"+points);
         SoundCtrl.getInstance().playSoundByActionButton(1);
         timer = -1;
         CustomSocket sok = CustomSocket.getInstance();
-        sok.sendMsg(new QiangZhuangDDZRequest(points));
+        sok.sendMsg(new QiangZhuangDDZRequest(isJiao?1:0));
     }
 
      // 斗地主抢庄回调    -lan
@@ -1360,6 +1359,9 @@ public class MyPDKScript : MonoBehaviour
                 }
 	     	}
         }
+        handerCardList[0].Sort(delegate (GameObject a, GameObject b) {
+            return a.GetComponent<pdkCardScript>().getPoint().CompareTo(b.GetComponent<pdkCardScript>().getPoint());
+        });
         SetPosition ();
 	}
 

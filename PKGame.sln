@@ -1,0 +1,35 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PKGame", "Assembly-CSharp-firstpass.csproj", "{31A97E00-C674-4E03-266C-B546B2542D95}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PKGame", "Assembly-CSharp.csproj", "{F8CAE2A1-CEF1-8C3E-316F-E1529D8D0628}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PKGame", "Assembly-CSharp-Editor.csproj", "{A99A508A-6BA1-63F7-88D1-2B5B5DC428E1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{31A97E00-C674-4E03-266C-B546B2542D95}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31A97E00-C674-4E03-266C-B546B2542D95}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31A97E00-C674-4E03-266C-B546B2542D95}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31A97E00-C674-4E03-266C-B546B2542D95}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8CAE2A1-CEF1-8C3E-316F-E1529D8D0628}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8CAE2A1-CEF1-8C3E-316F-E1529D8D0628}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8CAE2A1-CEF1-8C3E-316F-E1529D8D0628}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8CAE2A1-CEF1-8C3E-316F-E1529D8D0628}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A99A508A-6BA1-63F7-88D1-2B5B5DC428E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A99A508A-6BA1-63F7-88D1-2B5B5DC428E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A99A508A-6BA1-63F7-88D1-2B5B5DC428E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A99A508A-6BA1-63F7-88D1-2B5B5DC428E1}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = Assembly-CSharp.csproj
+	EndGlobalSection
+EndGlobal
