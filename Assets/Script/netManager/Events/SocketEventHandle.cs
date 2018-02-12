@@ -187,16 +187,102 @@ namespace AssemblyCSharp
 					JoinRoomCallBack(response);
 				}
 				break;
-			case APIS.STARTGAME_RESPONSE_NOTICE:
+            case APIS.LANDLORDS_STARTGAME_RESPONSE_NOTICE:      //case APIS.STARTGAME_RESPONSE_NOTICE:游戏开始通知
 				if (StartGameNotice != null) {
 					StartGameNotice (response);
 				}
 				break;
-			case APIS.PICKCARD_RESPONSE:
-				if (pickCardCallBack != null) {
-					pickCardCallBack (response);
-				}
-				break;
+            case APIS.LANDLORD_OTHER_JOIN_ROOM_NOICE:          //case APIS.JOIN_ROOM_NOICE:     原本其他玩家加入房间的返回
+                if (otherUserJointRoomCallBack != null)
+                {
+                    otherUserJointRoomCallBack(response);
+                }
+                break;
+            case APIS.LANDLORDS_READY_RESPONSE:                //case APIS.PrepareGame_MSG_RESPONSE:原本游戏准备回调事件
+                if (gameReadyNotice != null)
+                {
+                    gameReadyNotice(response);
+                }
+                break;
+            case APIS.QIANG_LANDLORDS_RESPONE:                // 斗地主抢庄的回调
+                if (DDZ_qiangResponse != null)
+                {
+                    DDZ_qiangResponse(response);
+                }
+                break;
+            case APIS.ZHUANG_LANDLORDS_RESPONE:                // 斗地主确定庄的回调
+                if (DDZ_zhuangResponse != null)
+                {
+                    DDZ_zhuangResponse(response);
+                }
+                break;
+            case APIS.LANDLORDS_TI_RESPONE:                    // 斗地主踢牌通知
+                if (DDZ_TIResponse != null)
+                {
+                    DDZ_TIResponse(response);
+                }
+                break;
+
+            case APIS.LANDLORDS_OUTROOM_RESPONE:            //case APIS.OUT_ROOM_RESPONSE:原游戏退出回调
+                if (outRoomCallback != null)
+                {
+                    outRoomCallback(response);
+                }
+                break;
+            case APIS.LANDLORDS_CHUPAI_RESPONSE:           //case APIS.CHUPAI_PDK_RESPONSE:  原游戏出牌回调
+                if (PDK_putOutCardCallBack != null)
+                {
+                    PDK_putOutCardCallBack(response);
+                }
+                break; 
+            case APIS.LANDLORDS_YAOBUQI_RESPONSE:          //case APIS.CHIBUQI_PDK_RESPONSE:     原游戏要不起通知
+                if (PDK_ChiBuQiCallBack != null)
+                {
+                    PDK_ChiBuQiCallBack(response);
+                }
+                break;
+            case APIS.LANDLORDS_RETURN_ONLINE_RESPONSE:    //case APIS.RETURN_ONLINE_RESPONSE:掉线重连
+                if (returnGameResponse != null)
+                {
+                    returnGameResponse(response);
+                }
+                    break;
+            case APIS.LANDLORDS_APPLYLEAVE_ROOM_RESPONSE:  // case APIS.DISSOLIVE_ROOM_RESPONSE:  申请解散房间回调
+                if (dissoliveRoomResponse != null)
+                {
+                    dissoliveRoomResponse(response);
+                    }
+                    break;
+            case APIS.LANDLORDS_OFFLINE_NOTICE:         //case APIS.OFFLINE_NOTICE:离线通知
+                if (offlineNotice != null)
+                {
+                    offlineNotice(response);
+                }
+                break;
+            case APIS.LANDLORDS_ONLINE_NOTICE:          //case APIS.ONLINE_NOTICE:上线通知
+                if (onlineNotice != null)
+                {
+                    onlineNotice(response);
+                    }
+                    break;
+            case APIS.LANDLORDS_WIN_RESPONSE:          //case APIS.HUPAI_RESPONSE:赢通知
+                if (HupaiCallBack != null)
+                {
+                    HupaiCallBack(response);
+                }
+                break;
+            case APIS.LANDLORDS_CHATMESSAGE_NOTICE:    //case APIS.MessageBox_Notice: 收到聊天信息回调
+                if (messageBoxNotice != null)
+                {
+                    messageBoxNotice(response);
+                }
+                break;
+
+            case APIS.PICKCARD_RESPONSE:
+		        if (pickCardCallBack != null) {
+			        pickCardCallBack (response);
+		        }
+			            break;
 			case APIS.OTHER_PICKCARD_RESPONSE_NOTICE:
 				if (otherPickCardCallBack != null) {
 					otherPickCardCallBack (response);
@@ -205,21 +291,6 @@ namespace AssemblyCSharp
 			case APIS.CHUPAI_RESPONSE:
 				if(putOutCardCallBack != null){
 					putOutCardCallBack (response);
-				}
-				break;
-			case APIS.CHUPAI_PDK_RESPONSE:
-				if(PDK_putOutCardCallBack != null){
-					PDK_putOutCardCallBack (response);
-				}
-				break;
-			case APIS.CHIBUQI_PDK_RESPONSE:
-				if(PDK_ChiBuQiCallBack != null){
-					PDK_ChiBuQiCallBack (response);
-				}
-				break;
-            case APIS.LANDLORD_OTHER_JOIN_ROOM_NOICE:      //case APIS.JOIN_ROOM_NOICE:     原本其他玩家加入房间的返回
-				if (otherUserJointRoomCallBack != null) {
-					otherUserJointRoomCallBack (response);
 				}
 				break;
 			case APIS.JOIN_ROOM_IP_RESPONSE:
@@ -272,33 +343,15 @@ namespace AssemblyCSharp
 				}
 				break;
 
-			case APIS.OUT_ROOM_RESPONSE:
-				if (outRoomCallback != null) {
-					outRoomCallback (response);
-				}
-				break;
 			case APIS.headRESPONSE:
 				break;
-			case APIS.DISSOLIVE_ROOM_RESPONSE:
-				if (dissoliveRoomResponse != null) {
-					dissoliveRoomResponse (response);
-				}
-				break;
-                case APIS.LANDLORDS_READY_RESPONSE:                               //case APIS.PrepareGame_MSG_RESPONSE:原本游戏准备回调事件
-                if (gameReadyNotice != null) {
-					gameReadyNotice (response);
-				}
-				break;
+		
 			case APIS.MicInput_Response:
 				if (micInputNotice != null) {
 					micInputNotice (response);
 				}
 				break;
-			case APIS.MessageBox_Notice:
-				if (messageBoxNotice != null) {
-					messageBoxNotice (response);
-				}
-				break;
+            
 			case APIS.ERROR_RESPONSE:
 				if(serviceErrorNotice !=null){
 					serviceErrorNotice(response);
@@ -315,17 +368,7 @@ namespace AssemblyCSharp
 					cardChangeNotice (response);
 				}
 				break;
-			case APIS.OFFLINE_NOTICE:
-				if (offlineNotice != null) {
-					offlineNotice (response);
-				}
-				break;
-			case APIS.RETURN_ONLINE_RESPONSE:
-				
-				if (returnGameResponse != null) {
-					returnGameResponse (response);
-				}
-				break;
+		
 			case APIS.PRIZE_RESPONSE:
 				if (giftResponse != null) {
 					giftResponse (response);
@@ -391,19 +434,6 @@ namespace AssemblyCSharp
 				}
 				break;
 
-            case APIS.QIANG_DDZ_RESPONE:        // 斗地主抢庄的回调
-                if (DDZ_qiangResponse != null)
-                {
-                    DDZ_qiangResponse(response);
-                }
-                break;
-            case APIS.ZHUANG_DDZ_RESPONE:      // 斗地主确定庄的回调
-                if(DDZ_zhuangResponse !=null)
-                {
-                    DDZ_zhuangResponse(response);
-                }
-                break;
-
             case APIS.QIANG_DN_RESPONSE:
 			if (DN_qiangResponse != null) {
 				DN_qiangResponse (response);
@@ -414,12 +444,6 @@ namespace AssemblyCSharp
 					DN_zhuangResponse (response);
 				}
 				break;
-            case APIS.DDZ_TI_RESPONE:             // 斗地主踢牌请求
-                if (DDZ_TIResponse != null)
-                {
-                   DDZ_TIResponse(response);
-                }
-                break;
             case APIS.ZHU_DN_RESPONSE:
 			   if (DN_xiaZhuResponse != null) {
 				DN_xiaZhuResponse (response);

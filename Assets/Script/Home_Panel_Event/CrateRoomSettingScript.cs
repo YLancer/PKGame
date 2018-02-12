@@ -110,11 +110,7 @@ public class CrateRoomSettingScript : MonoBehaviour {
     public Slider slider_amh;
     public List<Text> difen_AMH;
 
-
     public List<Toggle> ddzRules;
-    
-
-
     void Start () {
         Btn_ddz_liang.onClick.AddListener(openSettingPanel_DDZ);        //按钮绑定时间—斗地主 
         Btn_ddz_dark.onClick.AddListener(openSettingPanel_DDZ);
@@ -142,89 +138,31 @@ public class CrateRoomSettingScript : MonoBehaviour {
 
 		openDefaultSetingPanel ();//打开默认房间设置
 
-        SocketEventHandle.getInstance ().CreateRoomCallBack += onCreateRoomCallback;
 		if (SocketEventHandle.getInstance ().serviceErrorNotice != null) {
 			SocketEventHandle.getInstance ().serviceErrorNotice = null;
 		}
-		SocketEventHandle.getInstance ().serviceErrorNotice += serviceResponse;
+
+        SocketEventHandle.getInstance().CreateRoomCallBack += onCreateRoomCallback;
+        SocketEventHandle.getInstance ().serviceErrorNotice += serviceResponse;
 	}
 
 	public void serviceResponse(ClientResponse response){
 		watingPanel.gameObject.SetActive(false);
 		TipsManagerScript.getInstance ().setTips (response.message);
 	}
-
-	// Update is called once per frame
-	void Update () {
-        //showDZPK_difen();
-        //showAMH_difen();
-    }
-    string text_DZPK;
-    void showDZPK_difen()
-    {
-        text_DZPK = "200";
-         if (slider_dzpk.value >=0 && slider_dzpk.value <=0.2f){  
-                slider_dzpk.value = 0.1f;
-            text_DZPK = "200";
-        }
-        else if(slider_dzpk.value >0.2f && slider_dzpk.value <=0.4f){
-            slider_dzpk.value = 0.3f;
-            text_DZPK = "500";
-        }
-        else if (slider_dzpk.value >0.4f && slider_dzpk.value <=0.6f){
-            slider_dzpk.value = 0.5f;
-            text_DZPK = "1000";
-        }
-        else if (slider_dzpk.value >0.6f && slider_dzpk.value <=0.8f){
-            slider_dzpk.value = 0.7f;
-            text_DZPK = "2000";
-        }
-        else if (slider_dzpk.value > 0.8f && slider_dzpk.value <= 1f){
-            slider_dzpk.value = 1f;
-            text_DZPK = "5000";
-        }
-    }
-    void showAMH_difen()
-    {
-        text_DZPK = "200";
-        if (slider_amh.value >= 0 && slider_amh.value <= 0.2f)
-        {
-            slider_amh.value = 0.1f;
-            text_DZPK = "200";
-        }
-        else if (slider_amh.value > 0.2f && slider_amh.value <= 0.4f)
-        {
-            slider_amh.value = 0.3f;
-            text_DZPK = "500";
-        }
-        else if (slider_amh.value > 0.4f && slider_amh.value <= 0.6f)
-        {
-            slider_amh.value = 0.5f;
-            text_DZPK = "1000";
-        }
-        else if (slider_amh.value > 0.6f && slider_amh.value <= 0.8f)
-        {
-            slider_amh.value = 0.7f;
-            text_DZPK = "2000";
-        }
-        else if (slider_amh.value > 0.8f && slider_amh.value <= 1f)
-        {
-            slider_amh.value = 1f;
-            text_DZPK = "5000";
-        }
-    }
-
+    
 
     public void cancle() {
 		SoundCtrl.getInstance().playSoundByActionButton(1);
         watingPanel.gameObject.SetActive(false);
-
-
     }
-	/***
+
+    #region  以前控制游戏玩法界面的处理
+
+    /***
 	 * 打开转转麻将设置面板
-	 */ 
-	public void openSetingPanel_ZhuangZhuang(){
+	 */
+    public void openSetingPanel_ZhuangZhuang(){
 
 		SoundCtrl.getInstance().playSoundByActionButton(1);
 		//GlobalDataScript.userGameType = GameType.GameType_MJ_ZhuangZhuang;
@@ -421,6 +359,16 @@ public class CrateRoomSettingScript : MonoBehaviour {
         });
     }
 
+    public void openDeveloping()
+    {
+        SoundCtrl.getInstance().playSoundByActionButton(1);
+        GlobalDataScript.userGameType = GameType.GameType_MJ_Developing;
+        loadDefaultSet(GlobalDataScript.userGameType);
+        setGameObjectActive(GlobalDataScript.userGameType);
+    }
+
+    #endregion
+
     //-lan   打开斗地主的游戏界面
     void openSettingPanel_DDZ()
     {
@@ -431,18 +379,10 @@ public class CrateRoomSettingScript : MonoBehaviour {
         createRoom.onClick.AddListener(delegate(){this.createDDZRoom(); });
     }
 
-    public void Button_down()
+    public void Button_down()         
     {
 		SoundCtrl.getInstance().playSoundByActionButton(1);
         Application.OpenURL("http://a.app.qq.com/o/simple.jsp?pkgname=com.pengyoupdk.poker");
-    }
-
-    
-    public void openDeveloping(){
-		SoundCtrl.getInstance().playSoundByActionButton(1);
-		GlobalDataScript.userGameType = GameType.GameType_MJ_Developing;
-		loadDefaultSet (GlobalDataScript.userGameType);
-		setGameObjectActive (GlobalDataScript.userGameType);
     }
 
     public void closeDialog(){
@@ -480,10 +420,12 @@ public class CrateRoomSettingScript : MonoBehaviour {
 		}
 	}
 
-	/**
+    #region  以前开发用的游戏类型代码，暂时无用
+
+    /**
 	 * 创建转转麻将房间
-	 */ 
-	public void createZhuanzhuanRoom(){
+	 */
+    public void createZhuanzhuanRoom(){
 		SoundCtrl.getInstance().playSoundByActionButton(1);
 		int roundNumber = 4;//房卡数量
 //		bool isZimo=false;//自摸
@@ -1014,19 +956,18 @@ public class CrateRoomSettingScript : MonoBehaviour {
 			sendVo.roundNumber = 24;
 		}
 
-        //if (dzpkGameRule [3].isOn) {
-        //	sendVo.initFen_dzpk = 200;
-        //} else if (dzpkGameRule [4].isOn) {
-        //	sendVo.initFen_dzpk = 500;
-        //} else if (dzpkGameRule [5].isOn) {
-        //	sendVo.initFen_dzpk = 1000;
-        //} else if (dzpkGameRule [6].isOn) {
-        //	sendVo.initFen_dzpk = 2000;
-        //} else if (dzpkGameRule [7].isOn) {
-        //	sendVo.initFen_dzpk = 5000;
+        //if (dzpkgamerule [3].ison) {
+        //	sendvo.initfen_dzpk = 200;
+        //} else if (dzpkgamerule [4].ison) {
+        //	sendvo.initfen_dzpk = 500;
+        //} else if (dzpkgamerule [5].ison) {
+        //	sendvo.initfen_dzpk = 1000;
+        //} else if (dzpkgamerule [6].ison) {
+        //	sendvo.initfen_dzpk = 2000;
+        //} else if (dzpkgamerule [7].ison) {
+        //	sendvo.initfen_dzpk = 5000;
         //}
 
-        sendVo.initFen_dzpk = int.Parse(text_DZPK);
         sendVo.gameType = (int)GameTypePK.DZPK;
         sendVo.AA = false; //暂时用这个标记区分奥马哈跟德扑
 
@@ -1075,7 +1016,7 @@ public class CrateRoomSettingScript : MonoBehaviour {
         //    sendVo.initFen_dzpk = 5000;
         //}
         #endregion
-        sendVo.initFen_dzpk = int.Parse(text_DZPK);
+        //sendVo.initFen_dzpk = int.Parse(text_DZPK);
         sendVo.gameType = (int)GameTypePK.DZPK; //暂时能力不足，做成奥马哈寄生在德扑之下。
         sendVo.AA = true; //暂时用这个标记区分奥马哈跟德扑
 
@@ -1217,21 +1158,24 @@ public class CrateRoomSettingScript : MonoBehaviour {
 		ReqForCreateRoom (sendmsgstr);
 	}
 
-//	public void toggleHongClick(){
-//
-//		if (zhuanzhuanGameRule [2].isOn) {
-//			zhuanzhuanGameRule [0].isOn = true;
-//		}
-//	}
-//
-//	public void toggleQiangGangHuClick(){
-//		if (zhuanzhuanGameRule [1].isOn) {
-//			zhuanzhuanGameRule [2].isOn = false;
-//		}
-//	}
+    //	public void toggleHongClick(){
+    //
+    //		if (zhuanzhuanGameRule [2].isOn) {
+    //			zhuanzhuanGameRule [0].isOn = true;
+    //		}
+    //	}
+    //
+    //	public void toggleQiangGangHuClick(){
+    //		if (zhuanzhuanGameRule [1].isOn) {
+    //			zhuanzhuanGameRule [2].isOn = false;
+    //		}
+    //	}
+
+    #endregion
+
 
     //斗地主玩法   -lan
-   void createDDZRoom() 
+    void createDDZRoom() 
     {
         sendVo = new RoomCreateVo();
         
@@ -1621,12 +1565,12 @@ public class CrateRoomSettingScript : MonoBehaviour {
 	}
 
 	public void setGameObjectActive(GameType gt){//设置游戏物体显示的切换
-//		Btn_zhuanZ_liang.SetActive(GameType.GameType_MJ_ZhuangZhuang == gt);//GameType.GameType_MJ_ZhuangZhuang == gt
-//		Btn_zhuanZ_dark.SetActive(GameType.GameType_MJ_ZhuangZhuang != gt);//GameType.GameType_MJ_ZhuangZhuang != gt
+        //Btn_zhuanZ_liang.SetActive(GameType.GameType_MJ_ZhuangZhuang == gt);//GameType.GameType_MJ_ZhuangZhuang == gt
+        //Btn_zhuanZ_dark.SetActive(GameType.GameType_MJ_ZhuangZhuang != gt);//GameType.GameType_MJ_ZhuangZhuang != gt
 		//Btn_zhuanZ_liang.SetActive(GameType.GameType_MJ_YiChun == gt);
 		//Btn_zhuanZ_dark.SetActive(GameType.GameType_MJ_YiChun != gt);
-//		Btn_huaS_liang.SetActive(false);//GameType.GameType_MJ_HuaShui == gt
-//		Btn_huaS_dark.SetActive(false);//GameType.GameType_MJ_HuaShui != gt
+        //Btn_huaS_liang.SetActive(false);//GameType.GameType_MJ_HuaShui == gt
+        //Btn_huaS_dark.SetActive(false);//GameType.GameType_MJ_HuaShui != gt
 		//Btn_huaS_liang.SetActive(GameType.GameType_MJ_HuaShui == gt);//GameType.GameType_MJ_HuaShui == gt
 		//Btn_huaS_dark.SetActive(GameType.GameType_MJ_HuaShui != gt);//GameType.GameType_MJ_HuaShui != gt
 		//Btn_ganzhou_liang.SetActive (GameType.GameType_MJ_GanZhou == gt);//
@@ -1645,8 +1589,8 @@ public class CrateRoomSettingScript : MonoBehaviour {
 		//Btn_chaoshan_dark.SetActive (GameType.GameType_MJ_ChaoShan != gt);
 		//Btn_dzpk_liang.SetActive (GameType.GameType_PK_DZPK == gt);
 		//Btn_dzpk_dark.SetActive (GameType.GameType_PK_DZPK != gt);
-  //      Btn_amh_liang.SetActive(GameType.GameType_PK_AMH == gt);
-  //      Btn_amh_dark.SetActive(GameType.GameType_PK_AMH != gt);
+        //Btn_amh_liang.SetActive(GameType.GameType_PK_AMH == gt);
+        //Btn_amh_dark.SetActive(GameType.GameType_PK_AMH != gt);
 
         //		if (GlobalDataScript.configTemp.pay == 1) {
         //			Btn_ganzhou_liang.SetActive (false);
@@ -1658,8 +1602,7 @@ public class CrateRoomSettingScript : MonoBehaviour {
 			createRoom.gameObject.SetActive (true);
 		}
 
-
-//		panelZhuanzhuanSetting.SetActive(GameType.GameType_MJ_ZhuangZhuang == gt);
+        //panelZhuanzhuanSetting.SetActive(GameType.GameType_MJ_ZhuangZhuang == gt);
 		//panelZhuanzhuanSetting.SetActive(GameType.GameType_MJ_YiChun == gt);
 		//panelHuashuiSetting.SetActive(GameType.GameType_MJ_HuaShui == gt);
 		//panelChangshaSetting.SetActive(GameType.GameType_MJ_ChangSha == gt);
@@ -1672,7 +1615,7 @@ public class CrateRoomSettingScript : MonoBehaviour {
 		//panelDevoloping.SetActive(GameType.GameType_MJ_Developing == gt);
 		//panelDnSetting.SetActive (GameType.GameType_PK_DN == gt);
 		//panelDzpkSetting.SetActive (GameType.GameType_PK_DZPK == gt);
-  //      panelAmhSetting.SetActive(GameType.GameType_PK_AMH == gt);
+        //panelAmhSetting.SetActive(GameType.GameType_PK_AMH == gt);
 
         // lan - 斗地主
         Btn_ddz_liang.gameObject.SetActive(GameType.GameType_PK_DDZ == gt);

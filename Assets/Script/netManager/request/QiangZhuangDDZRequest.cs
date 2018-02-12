@@ -7,7 +7,7 @@ namespace AssemblyCSharp
     {
         public QiangZhuangDDZRequest(int QiangDDZ)
         {
-            headCode = APIS.QIANG_DDZ_REQUEST;     // 斗地主抢庄的请求
+            headCode = APIS.QIANG_LANDLORDS_REQUEST;     // 斗地主抢庄的请求
             if (GlobalDataScript.loginResponseData != null)
             {
                 messageContent = "" + QiangDDZ;           
