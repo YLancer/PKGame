@@ -1,0 +1,71 @@
+创建房间数据：
+public int roundNumber;      //9局1钻石   18局4钻石    30局5钻石
+public int bombMultiple;     // 斗地主限制炸弹数目，在结算时用  1、4倍  2、5倍  3、6倍   4、无限制
+public bool isKick = true;   // 踢为加倍    
+public bool AA = false;      // 默认房主支付    true为AA支付
+public int gameType=0;       // 斗地主 gameType =7;
+
+
+points为抢庄下底分分数  0为不枪庄   1为1分   2为2分   3为3分
+ 
+public const int LANDLORD_CREATE_ROOM_REQUEST= 0x90009;    // 创建房间请求
+public const int LANDLORD_JOIN_ROOM_REQUEST = 0x90010;     // 加入房间的请求
+
+public const int LANDLORD_CREATE_ROOM_RRESPONSE = 0x90019;   // 创建房间返回的通知
+public const int LANDLORD_JOIN_ROOM_RRESPONSE = 0x90020;     // 加入房间的返回通知
+public const int LANDLORD_OTHER_JOIN_ROOM_NOICE = 0x90021;//其它人加入房间通知
+
+public const int LANDLORDS_READY_REQUEST = 0x90001;  //斗地主准备请求
+public const int LANDLORDS_READY_RESPONSE = 0x90011;  //斗地主准备回调
+public const int LANDLORDS_STARTGAME_RESPONSE_NOTICE = 0x90012; //斗地主开始游戏通知
+
+public const int QIANG_LANDLORDS_REQUEST = 0x90003;   //斗地主抢庄请求
+public const int QIANG_LANDLORDS_RESPONE = 0x90030;   //斗地主抢庄回调
+public const int ZHUANG_LANDLORDS_RESPONE = 0x90031;   //斗地主庄确定回调
+
+public const int LANDLORDS_TI_REQUEST = 0x90004;    // 踢牌的请求
+public const int LANDLORDS_TI_RESPONE = 0x90041;    // 踢牌回调
+
+public const int LANDLORDS_CHUPAI_REQUEST = 0x90005;     //斗地主出牌请求
+public const int LANDLORDS_CHUPAI_RESPONSE = 0x90050;    //斗地主出牌通知
+public const int LANDLORDS_YAOBUQI_RESPONSE = 0x90051;   //斗地主要不起
+
+public const int LANDLORDS_APPLYLEAVE_ROOM_REQUEST = 0x90006;//申请解散房间
+public const int LANDLORDS_APPLYLEAVE_ROOM_RESPONSE = 0x90060;//解散房间回调
+
+public const int LANDLORDS_OUTROOM_REQUEST = 0x90007;  // 斗地主退出房间请求
+public const int LANDLORDS_OUTROOM_RESPONE = 0x90070;  //斗地主退出房间回调
+
+public const int LANDLORDS_OFFLINE_NOTICE = 0x90008;   //斗地主离线通知
+public const int LANDLORDS_ONLINE_NOTICE = 0x90080;     //斗地主上线通知
+
+public const int LANDLORDS_RETURN_ONLINE_RESPONSE = 0x90088;//断线重连返回最后一次打牌数据
+
+public const int LANDLORDS_CHATMESSAGE_REQUEST = 0x90098;   //发送聊天请求
+public const int LANDLORDS_CHATMESSAGE_NOTICE = 0x90099;    //收到聊天通知
+
+public const int LANDLORDS_WIN_RESPONSE = 0x99999;// 斗地主赢牌通知   好像不需要赢牌的请求 ？？？ TODO
+
+//原来协议还有一个serviceErrorNotice 错误信息的返回  暂时还没写 TODO 
+
+
+
+
+
+
+
+
+
+
+创建房间返回通知  ClientResponse response     返回 response （message（roomid房间号）)   -----OK
+加入房间返回通知  ClientResponse response     返回 response （message（房间规则））      -----OK
+其它人加入房间通知 ClientResponse response    返回 response （message（玩家信息））      -----OK
+准备回调    ClientResponse response    返回 response ()  -----0K
+抢庄回调    ClientResponse response    返回 response(message 返回一个avatorIndex)
+
+
+
+
+
+
+

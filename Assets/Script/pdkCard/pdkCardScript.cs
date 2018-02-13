@@ -128,14 +128,16 @@ public class pdkCardScript : MonoBehaviour, IPointerDownHandler,
             if(_cardPoint ==52)
             {
                 cardPoint = _cardPoint;
-                kingCenterImage.sprite = Resources.Load("pdk/card/" + "20_1", typeof(Sprite)) as Sprite;
-                kingPointImage.sprite = Resources.Load("pdk/card/" + "20_2", typeof(Sprite)) as Sprite;
+                typeImage.enabled = false;
+                centerImage.sprite = Resources.Load("pdk/card/20_1", typeof(Sprite)) as Sprite;
+                pointImage.sprite = Resources.Load("pdk/card/20_2" , typeof(Sprite)) as Sprite;
             }
             else if(_cardPoint ==53)
             {
                 cardPoint = _cardPoint;
-                kingCenterImage.sprite = Resources.Load("pdk/card/" + "21_1", typeof(Sprite)) as Sprite;
-                kingPointImage.sprite = Resources.Load("pdk/card/" + "21_2", typeof(Sprite)) as Sprite;
+                typeImage.enabled = false;
+                centerImage.sprite = Resources.Load("pdk/card/" + "21_1", typeof(Sprite)) as Sprite;
+                pointImage.sprite = Resources.Load("pdk/card/" + "21_2", typeof(Sprite)) as Sprite;
             }
 
 		} else if (gameType == 3) {

@@ -53,7 +53,9 @@ public class PlayerItemScript : MonoBehaviour
 	public GameObject mfbq;
 
     public Image tiPai;
-    public Transform handCard;  
+    public Transform handCard;  // 每家自己的手牌object
+    public List<int> hanCards;  // 手牌的数值
+
     void Start()
     {
 		avaCurZhu_dzpk = 0;
