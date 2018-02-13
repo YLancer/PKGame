@@ -1359,8 +1359,9 @@ public class MyPDKScript : MonoBehaviour
                 }
 	     	}
         }
+        //对收牌进行降序排列
         handerCardList[0].Sort(delegate (GameObject a, GameObject b) {
-            return a.GetComponent<pdkCardScript>().getPoint().CompareTo(b.GetComponent<pdkCardScript>().getPoint());
+            return b.GetComponent<pdkCardScript>().getPoint()%13.CompareTo(a.GetComponent<pdkCardScript>().getPoint()%13);
         });
         SetPosition ();
 	}
@@ -1420,6 +1421,7 @@ public class MyPDKScript : MonoBehaviour
                     }
                 }
                 landlord_deskCardList.Remove(landlord_deskCardList[i]);
+                Destroy(landlord_deskCardList[i]);
             }
         }
         playerItems[bankerIndex].showPaiCountText(int.Parse(playerItems[bankerIndex].paiCountText.text) + 4);
