@@ -103,8 +103,7 @@ public class MyPDKScript : MonoBehaviour
 
     public GameObject panel_landlordChoose;
     public GameObject panel_Ti;
-
-    public Button noQiangLandLord;   // 不抢地主的按钮触发事件
+    
     void Start ()
 	{
 		init ();
@@ -335,7 +334,7 @@ public class MyPDKScript : MonoBehaviour
         int bankerIdInedx = getIndexByDir(getDirection(bankerId));
         playerItems[bankerIdInedx].setbankImgEnable(true);
         // todo  确定了谁是庄家  将桌面上的牌  移到庄家手里
-        bankerAddCard(bankerIdInedx);
+        //bankerAddCard(bankerIdInedx);
 
         //if(bankerIdInedx ==0)
         //{
@@ -1415,6 +1414,18 @@ public class MyPDKScript : MonoBehaviour
             }
         }
         playerItems[bankerIndex].showPaiCountText(int.Parse(playerItems[bankerIndex].paiCountText.text) + 4);
+
+        //  todo 首先要消失所有的手牌   另外一种写法地主牌的增加
+        //cleanList(handerCardList[0]);
+        //for (int t=0;t<landlord_deskCardList.Count-1;t++)
+        //{
+        //    int point = landlord_deskCardList[t].GetComponent<pdkCardScript>().getPoint();
+        //    playerItems[bankerIndex].hanCards.Add(point);
+        //    playerItems[bankerIndex].hanCards.Sort(delegate (int a, int b) { return (a % 13).CompareTo(b % 13); });
+        //    landlord_deskCardList.Remove(landlord_deskCardList[t]);
+        //    Destroy(landlord_deskCardList[t]);
+        //}
+        //SetPosition();
     }
 
     IEnumerator FanPai(float time, GameObject go)
