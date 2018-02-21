@@ -322,7 +322,6 @@ public class MyPDKScript : MonoBehaviour
             panel_landlordChoose.SetActive(true);
             currentIndex = 0;
         }
-
     }
 
     // 庄家确定回调
@@ -330,13 +329,13 @@ public class MyPDKScript : MonoBehaviour
     {
         JsonData json = JsonMapper.ToObject(response.message);
         print(" -------DDZ_zhuangResponse-----" + response.message);
-        //bankerId = (int)json[" "];        
-        //curDirString = getDirection(bankerId);
-        //avatarList[bankerId].main = true;
-        //int bankerIdInedx = getIndexByDir(getDirection(bankerId));
-        //playerItems[bankerIdInedx].setbankImgEnable(true);
-        //// todo  确定了谁是庄家  将桌面上的牌  移到庄家手里
-        //bankerAddCard(bankerIdInedx);
+        bankerId = (int)json["avatorIndex"];        
+        curDirString = getDirection(bankerId);
+        avatarList[bankerId].main = true;
+        int bankerIdInedx = getIndexByDir(getDirection(bankerId));
+        playerItems[bankerIdInedx].setbankImgEnable(true);
+        // todo  确定了谁是庄家  将桌面上的牌  移到庄家手里
+        bankerAddCard(bankerIdInedx);
 
         //if(bankerIdInedx ==0)
         //{
@@ -1244,55 +1243,7 @@ public class MyPDKScript : MonoBehaviour
                 handerCardList[0].Add(gob);// 手牌的增加
                 count++;
             }
-        }
-     
-        //doSort();
-        //float width = -50f;
-        //for (int i=0;i<handerCardList[0].Count;i++)
-        //{
-        //    GameObject handCard = handerCardList[0][i];
-        //    Vector3 toPos = Vector3.right * width * (i - handerCardList[0].Count * 0.5f);
-        //    if(handerCardList[0].IndexOf(handCard)!=handerCardList[0].Count-1)
-        //    {
-        //        handCard.transform.DOLocalMove(toPos,0.4f);
-        //    }
-        //    else
-        //    {
-        //        handCard.transform.DOLocalMoveX(toPos.x, 0.3f).SetDelay(0.4f);
-        //    }
-        //}
-
-        //int count = handerCardList[0].Count;
-        //int startX = -370 + (16 - count) / 2 * 50;
-
-        //for (int i = 0; i < count; i++)
-        //{
-        //    handerCardList[0][i].transform.localPosition = new Vector3(startX + i * 50f, 0); //从左到右依次对齐
-        //}
-    }
-    //对收牌进行降序排列
-    void doSort()
-    {
-        //handerCardList[0].Sort(delegate (GameObject a, GameObject b)
-        //{
-        //    return (a.GetComponent<pdkCardScript>().getPoint() % 13).CompareTo(b.GetComponent<pdkCardScript>().getPoint() % 13);
-        //});
-        GameObject change = null;
-        for(int i=0;i<handerCardList[0].Count;i++)
-        {
-            for(int j =i+1; j<handerCardList[0].Count-1;j++)
-            {
-                int ai = handerCardList[0][i].GetComponent<pdkCardScript>().getPoint();
-                int bj = handerCardList[0][j].GetComponent<pdkCardScript>().getPoint();
-                if(ai%13 < bj%13)
-                {
-                    change = handerCardList[0][i];
-                    handerCardList[0][i] = handerCardList[0][j];
-                    handerCardList[0][j] = change;
-                }
-            }
-        }
-
+        }  
     }
 
     /// <summary>

@@ -22,6 +22,7 @@ public const int LANDLORDS_STARTGAME_RESPONSE_NOTICE = 0x90012; //斗地主开始游戏
 public const int QIANG_LANDLORDS_REQUEST = 0x90003;   //斗地主抢庄请求
 public const int QIANG_LANDLORDS_RESPONE = 0x90030;   //斗地主抢庄回调
 public const int ZHUANG_LANDLORDS_RESPONE = 0x90031;   //斗地主庄确定回调
+public const int ZHUANG_NO_LANDLORDS_RESPONE = 0x90032; //斗地主不抢庄
 
 public const int LANDLORDS_TI_REQUEST = 0x90004;    // 踢牌的请求
 public const int LANDLORDS_TI_RESPONE = 0x90041;    // 踢牌回调
@@ -53,6 +54,10 @@ public const int LANDLORDS_WIN_RESPONSE = 0x99999;// 斗地主赢牌通知   好像不需要
 
 
 
+斗地主庄确定回调  增加返回参数  curTCardAvatarIndex 当前可T牌的玩家索引
+斗地主不抢庄      返回         curGrabAvatarIndex  当前可地主玩家索引
+斗地主开始游戏通知  增加一个玩家返回参数   curGrabAvatarIndex 当前可抢地主玩家索引
+ 
 
 
 
