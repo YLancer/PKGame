@@ -75,8 +75,8 @@ public class MyPDKScript : MonoBehaviour
 	public Button inviteFriendButton;
 
 	private int bankerId;
-	private int curDirIndex;
-	private int currentIndex = -1;
+	private int curDirIndex;          //当前玩家位置索引？
+	private int currentIndex = -1;    //当前玩家索引？
 	//当前出牌人
 	private string curDirString = "B";
 	//当前的方向字符串
