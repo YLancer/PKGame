@@ -103,6 +103,8 @@ public class MyPDKScript : MonoBehaviour
 
     public GameObject panel_landlordChoose;
     public GameObject panel_Ti;
+    public GameObject panel_GenTi;
+    public GameObject panel_HuiPai;
     
     void Start ()
 	{
@@ -119,22 +121,6 @@ public class MyPDKScript : MonoBehaviour
 
 		showFangzhu ();
 		loadBiaoQing ();
-
-		/*
-		mineList = new List<List<int>> ();
-		int[] mylist = {0,0,0,0,  0,0,0,0,  0,0,0,0,  0,
-			0,0,0,0,  0,0,0,0,  1,1,1,1,  0,
-			0,0,0,0,  0,0,0,0,  1,1,1,1,  0,
-			0,0,0,0,  1,1,1,1,  1,1,1,1,  0};
-
-		List<int> mList = new List<int>();
-		for (int i = 0; i < 52; i++) {
-			mList.Add (mylist[i]);
-		}
-		mineList.Add (mList);
-		initArrayList ();
-		displaySelfhanderCard ();
-		*/
 	}
 
 	public void init ()
@@ -203,6 +189,7 @@ public class MyPDKScript : MonoBehaviour
         SocketEventHandle.getInstance().DDZ_qiangResponse += DDZ_qiangResponse;
         SocketEventHandle.getInstance().DDZ_zhuangResponse += DDZ_zhuangResponse;
         SocketEventHandle.getInstance().DDZ_TIResponse += DDZ_TIResponse;
+        SocketEventHandle.getInstance().DDZ_ALL_TI_Response += DDZ_ALL_TI_Response;
     }
 
 	private void removeListener ()
@@ -225,6 +212,7 @@ public class MyPDKScript : MonoBehaviour
         SocketEventHandle.getInstance().DDZ_qiangResponse -= DDZ_qiangResponse;
         SocketEventHandle.getInstance().DDZ_zhuangResponse -= DDZ_zhuangResponse;
         SocketEventHandle.getInstance().DDZ_TIResponse -= DDZ_TIResponse;
+        SocketEventHandle.getInstance().DDZ_ALL_TI_Response -= DDZ_ALL_TI_Response;
     }
 
 	/**
@@ -284,8 +272,7 @@ public class MyPDKScript : MonoBehaviour
 		GlobalDataScript.singalGameOverList.Add (obj);
 		avatarList [bankerId].main = false;
 	}
-
-    // 斗地主从房主开始抢庄    -lan
+    
     public void qiangzhuang_DDZ(bool isJiao)    
     {
         SoundCtrl.getInstance().playSoundByActionButton(1);
@@ -293,10 +280,10 @@ public class MyPDKScript : MonoBehaviour
         CustomSocket sok = CustomSocket.getInstance();
         sok.sendMsg(new QiangZhuangDDZRequest(isJiao?1:0));
     }
-
-     // 斗地主抢庄回调    -lan
-    void DDZ_qiangResponse(ClientResponse response)                                   //response.message 传回来uuid 和 几分已经被选择        
+    
+    void DDZ_qiangResponse(ClientResponse response)                                 
     {
+        print("++++DDZ_qiangResponse+++" + response.message);
         JsonData json = JsonMapper.ToObject(response.message);
         int uuid = (int)json["dzUuid"];                               // 这是已经操作，服务器返回的玩家uuid？ 
         int multiple = (int)json["multiple"];
@@ -305,62 +292,65 @@ public class MyPDKScript : MonoBehaviour
         if (uuid == GlobalDataScript.loginResponseData.account.uuid && index ==0)                    
         {
             panel_landlordChoose.SetActive(false);
-            currentIndex = 1;
-        }
-
-        // 根据传回来的值判断   1分   2分   3分   能否再被点击
-        // 根据已被选择的值                                                         
-
-        if (index == 1)
-        {//下家
-            panel_landlordChoose.SetActive(true);
-            currentIndex = 2;
-        }
-        else if(index == 2)
-        {//上家
-            panel_landlordChoose.SetActive(true);
-            currentIndex = 0;
         }
     }
 
-    // 庄家确定回调
+    // 庄家确定回调{"avatarIndex":0,","curTCardAvatarIndex":2}
     void DDZ_zhuangResponse(ClientResponse response)   
     {
         JsonData json = JsonMapper.ToObject(response.message);
         print(" -------DDZ_zhuangResponse-----" + response.message);
-        bankerId = (int)json["avatorIndex"];        
+        bankerId = (int)json["avatarIndex"];   
+        // 提示出牌的不能放在庄家确定的回调中  要放在踢牌完成后显示     
         curDirString = getDirection(bankerId);
+        if (curDirString == DirectionEnum.Bottom){
+            btnActionScript.showBtn();
+            GlobalDataScript.isDrag = true;
+        }
+        else {
+            GlobalDataScript.isDrag = false;
+        }
         avatarList[bankerId].main = true;
         int bankerIdInedx = getIndexByDir(getDirection(bankerId));
         playerItems[bankerIdInedx].setbankImgEnable(true);
-        // todo  确定了谁是庄家  将桌面上的牌  移到庄家手里
-        //bankerAddCard(bankerIdInedx);
+        bankerAddCard(bankerIdInedx);
 
-        //if(bankerIdInedx ==0)
-        //{
-
-        //}
+        int TCardAvatarIndex = (int)json["curTCardAvatarIndex"];
+        if(TCardAvatarIndex == getMyIndexFromList())
+        {
+            panel_Ti.SetActive(true);
+        }
     }
 
-    // 是否踢牌    true踢即为加1倍    false不踢即为不再加倍,为0
     public void ti_DDZ(bool isTi)
-    {
+    {  // 是否踢牌    true踢即为加1倍    false不踢即为不再加倍,为0
         SoundCtrl.getInstance().playSoundByActionButton(1);
         timer = -1;
         CustomSocket sok = CustomSocket.getInstance();
         sok.sendMsg(new TiPaiRequest(isTi ? 1 : 0));
     }
 
-    // 踢牌的回调
+    // 踢牌的回调 {"multiple":1}
     void DDZ_TIResponse(ClientResponse response)
     {
         panel_Ti.SetActive(false);
-        string[] strs = response.message.Split(new char[] { ':' });
-        int uuid = Convert.ToInt32(strs[0]);
-        int index = getIndexByDir(getDirection(getIndex(uuid)));
-        //playerItems[index].setTiImage();                                    //根据服务器返回的值判断
+        JsonData json = JsonMapper.ToObject(response.message);
+        int multiple = (int)json["multiple"];
+    }
 
-     }
+    // 踢牌通知所有人  {"curTCardAvatarIndex":1,"multiple":1}
+    void DDZ_ALL_TI_Response(ClientResponse response)
+    {
+        JsonData json = JsonMapper.ToObject(response.message);
+        int GCardAvatarIndex = (int)json["curTCardAvatarIndex"];
+        int multiple = (int)json["multiple"];
+        if (GCardAvatarIndex == getMyIndexFromList() && multiple==2){
+            panel_GenTi.SetActive(true);
+        }
+        else{
+            panel_Ti.SetActive(true);
+        }
+    }
 
     void initPanel ()
 	{
@@ -1249,6 +1239,7 @@ public class MyPDKScript : MonoBehaviour
     /// 开始游戏
     /// </summary>
     /// <param name="response">Response.</param>
+    /// startGame++++{"curGrabAvatarIndex":0,"lastPaiArray":[[0,0,0,0,1,0,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]],"paiArray":[[0,0,1,1,0,0,0,0,1,0,0,1,0,0,0,0,1,0,0,1,1,1,1,0,0,0,1,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0]]}
     public void startGame (ClientResponse response)
 	{
 		GlobalDataScript.roomAvatarVoList = avatarList;
@@ -1271,7 +1262,6 @@ public class MyPDKScript : MonoBehaviour
 		GlobalDataScript.finalGameEndVo = null;
 		//GlobalDataScript.mainUuid = avatarList [0].account.uuid;
 		initArrayList ();
-		//curDirString = getDirection (bankerId);
 		//playerItems [curDirIndex].setbankImgEnable (true);     -lan
 		//SetDirGameObjectAction (bankerId);
 		isFirstOpen = false;
@@ -1287,23 +1277,29 @@ public class MyPDKScript : MonoBehaviour
 		//} else {
 			//initMyCardListAndOtherCard (15, 15, 15);
 		//}
-
-		if (curDirString == DirectionEnum.Bottom) {
-			btnActionScript.showBtn ();
-			GlobalDataScript.isDrag = true;
-		} else {
-			GlobalDataScript.isDrag = false;
-		}
+        // 只有庄家才能有提示出牌
+		//if (curDirString == DirectionEnum.Bottom) {
+		//	btnActionScript.showBtn ();
+		//	GlobalDataScript.isDrag = true;
+		//} else {
+		//	GlobalDataScript.isDrag = false;
+		//}
 
 		UpdateTimeReStart ();
 		isGameStart = true;
 		currentIndex = curDirIndex;
+        
+        //在第一局开始的时候是房主作为第一个抢地主的玩家，其次开始轮转
+        //在开始阶段需要服务器返回一个位置  作为可抢地主的玩家索引  
+        if (sgvo.GrabAvatarIndex == getMyIndexFromList())
+        {
+            panel_landlordChoose.SetActive(true);
+        }
     }
 
+    private void initArrayList ()      //  -change -lan
+    {
 
-	private void initArrayList ()
-	{
-        //  -change -lan
 		mineList = new List<List<int>> ();
         deskList = new List<List<int>>();                //桌面牌值的初始化
         handCards = new List<int>();
@@ -1314,22 +1310,11 @@ public class MyPDKScript : MonoBehaviour
             handerCardList.Add (new List<GameObject> ());
 			//tableCardList.Add (new List<GameObject> ());
 		}
-
-		//PengGangList_L = new List<List<GameObject>> ();
-		//PengGangList_R = new List<List<GameObject>> ();
-		//PengGangList_T = new List<List<GameObject>> ();
-		//PengGangCardList = new List<List<GameObject>> ();
 	}
 
 	private void initMyCardListAndOtherCard (int topCount, int leftCount, int rightCount)
 	{
-        //  lan - start游戏先从房主开始显示地主选择的按钮
-        int myIndex = getMyIndexFromList();
-        if(playerItems[myIndex].fangzhu.gameObject.activeSelf == true)
-        {
-            panel_landlordChoose.SetActive(true);
-        }
-
+      
         displaySelfhanderCard ();//显示自己的手牌
         AddDeskCard();
 
@@ -1364,8 +1349,6 @@ public class MyPDKScript : MonoBehaviour
                 GameObject gob_back = Instantiate(Resources.Load("prefab/pdk/HandCard_Back")) as GameObject;
                 if (gob_back != null)
                 {
-                    gob_back.GetComponent<pdkCardScript>().onDragSelect += dragSelect;        // 暂时放在这   有问题
-                    gob_back.GetComponent<pdkCardScript>().onCardSelect += cardSelect;        //
                     gob_back.transform.SetParent(landlord_TransformList);
                     gob_back.GetComponent<pdkCardScript>().setPoint(point);
                     landlord_deskCardList.Add(gob_back);
@@ -1390,42 +1373,20 @@ public class MyPDKScript : MonoBehaviour
     /* 庄家增加四张牌*/
     void bankerAddCard(int bankerIndex)
     {
-        int index = getMyIndexFromList();
-        float time = 0.1f;
-        if (index == bankerIndex)
+        // 首先要消失所有的手牌   
+        cleanList(handerCardList[0]);
+        for (int t = 0; t < landlord_deskCardList.Count; t++)
         {
-            for (int i = 0; i < landlord_deskCardList.Count - 1; i++)
-            {
-                GameObject deskCard= landlord_deskCardList[i];
-                StartCoroutine(FanPai(time, deskCard));
-                handerCardList[0].Add(deskCard);
-                deskCard.transform.SetParent(playerItems[bankerIndex].handCard);
-                for( int d=0;d < handerCardList[0].Count-1;d++)
-                {
-                    GameObject handcardGameObject = handerCardList[0][d];                                              
-                    if (deskCard.GetComponent<pdkCardScript>().getPoint() >= handcardGameObject.GetComponent<pdkCardScript>().getPoint())
-                    {//  z桌面地主牌，和地主手里每张牌的值进行比较，进行插入
-                        deskCard.transform.SetSiblingIndex(d);
-                        deskCard.transform.localScale = Vector3.one;
-                    }
-                }
-                landlord_deskCardList.Remove(landlord_deskCardList[i]);
-                Destroy(landlord_deskCardList[i]);
-            }
-        }
-        playerItems[bankerIndex].showPaiCountText(int.Parse(playerItems[bankerIndex].paiCountText.text) + 4);
+            int point = landlord_deskCardList[t].GetComponent<pdkCardScript>().getPoint();
+            playerItems[bankerIndex].hanCards.Add(point);
+            print(" bankerAddCard ---------------" + t);
+            landlord_deskCardList.Remove(landlord_deskCardList[t]);
+            Destroy(landlord_deskCardList[t]);
 
-        //  todo 首先要消失所有的手牌   另外一种写法地主牌的增加
-        //cleanList(handerCardList[0]);
-        //for (int t=0;t<landlord_deskCardList.Count-1;t++)
-        //{
-        //    int point = landlord_deskCardList[t].GetComponent<pdkCardScript>().getPoint();
-        //    playerItems[bankerIndex].hanCards.Add(point);
-        //    playerItems[bankerIndex].hanCards.Sort(delegate (int a, int b) { return (a % 13).CompareTo(b % 13); });
-        //    landlord_deskCardList.Remove(landlord_deskCardList[t]);
-        //    Destroy(landlord_deskCardList[t]);
-        //}
-        //SetPosition();
+            playerItems[bankerIndex].hanCards.Sort(delegate (int a, int b) { return (a % 13).CompareTo(b % 13); });
+        }
+        SetPosition();
+        playerItems[bankerIndex].showPaiCountText(int.Parse(playerItems[bankerIndex].paiCountText.text) + 4);
     }
 
     IEnumerator FanPai(float time, GameObject go)

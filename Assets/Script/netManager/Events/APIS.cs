@@ -169,7 +169,8 @@ namespace AssemblyCSharp
         public const int ZHUANG_LANDLORDS_RESPONE = 0x90031;   //斗地主庄确定回调
 
         public const int LANDLORDS_TI_REQUEST = 0x90004;    // 踢牌的请求
-        public const int LANDLORDS_TI_RESPONE = 0x90041;    // 踢牌回调
+        public const int LANDLORDS_TI_RESPONE = 0x90041;    // 踢牌回调仅仅返回给发送请求的玩家
+        public const int DDZ_TI_NOTICE = 0x112;            //踢牌
 
         public const int LANDLORDS_CHUPAI_REQUEST = 0x90005;     //斗地主出牌请求
         public const int LANDLORDS_CHUPAI_RESPONSE = 0x90050;    //斗地主出牌通知

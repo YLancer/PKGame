@@ -487,7 +487,7 @@ public class MyMahjongScript : MonoBehaviour
 		GlobalDataScript.roomAvatarVoList = avatarList;
 		//GlobalDataScript.surplusTimes -= 1;
 		StartGameVO sgvo = JsonMapper.ToObject<StartGameVO> (response.message);
-		bankerId = sgvo.bankerId;
+		bankerId = sgvo.GrabAvatarIndex;
 		GlobalDataScript.roomVo.guiPai = sgvo.gui;
 		GlobalDataScript.roomVo.guiPai2 = sgvo.gui2;
         

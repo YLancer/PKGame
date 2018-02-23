@@ -26,6 +26,7 @@ public const int ZHUANG_NO_LANDLORDS_RESPONE = 0x90032; //斗地主不抢庄
 
 public const int LANDLORDS_TI_REQUEST = 0x90004;    // 踢牌的请求
 public const int LANDLORDS_TI_RESPONE = 0x90041;    // 踢牌回调
+public static int DDZ_TI_NOTICE = 0x112;            // 踢牌通知给所有人
 
 public const int LANDLORDS_CHUPAI_REQUEST = 0x90005;     //斗地主出牌请求
 public const int LANDLORDS_CHUPAI_RESPONSE = 0x90050;    //斗地主出牌通知
@@ -65,9 +66,11 @@ public const int LANDLORDS_WIN_RESPONSE = 0x99999;// 斗地主赢牌通知   好像不需要
 创建房间返回通知  ClientResponse response     返回 response （message（roomid房间号）)   -----OK
 加入房间返回通知  ClientResponse response     返回 response （message（房间规则））      -----OK
 其它人加入房间通知 ClientResponse response    返回 response （message（玩家信息））      -----OK
+开始游戏返回       ClientResponse response    返回当前可以叫地主的玩家索引         -------0K
 准备回调    ClientResponse response    返回 response ()  -----0K
-抢庄回调    ClientResponse response    返回 response(message 返回一个avatorIndex)
-
+抢庄回调    ClientResponse response    返回 response(message 返回avatarIndex,)
+庄确定回调  ClientResponse response    返回庄家的索引   显示为庄的标志图片
+踢牌的回调
 
 
 

@@ -366,7 +366,7 @@ public class MyDZPKScript : MonoBehaviour {
 		}else
 			Number.text = GlobalDataScript.surplusTimes + "/" + GlobalDataScript.roomVo.roundNumber;
 
-		bankerId = sgvo.bankerId;
+		bankerId = sgvo.GrabAvatarIndex;
 		avatarList [bankerId].main = true;
 		PlayerItemScript bankerItem = getPlayItem (bankerId);
 		bankerItem.setbankImgEnable (true);

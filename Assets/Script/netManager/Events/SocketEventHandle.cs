@@ -72,6 +72,7 @@ namespace AssemblyCSharp
         public ServerCallBackEvent DDZ_qiangResponse;
         public ServerCallBackEvent DDZ_zhuangResponse; //庄家确定通知
         public ServerCallBackEvent DDZ_TIResponse;     //踢牌的通知
+        public ServerCallBackEvent DDZ_ALL_TI_Response;  //踢牌的通知给所有的玩家
         // 斗牛
         public ServerCallBackEvent DN_qiangResponse;
 		public ServerCallBackEvent DN_zhuangResponse; //庄家确定通知
@@ -220,6 +221,13 @@ namespace AssemblyCSharp
                 if (DDZ_TIResponse != null)
                 {
                     DDZ_TIResponse(response);
+                }
+                break;
+
+            case APIS.DDZ_TI_NOTICE:                         // 踢牌通知给所有人
+               if(DDZ_ALL_TI_Response != null)
+                {
+                    DDZ_ALL_TI_Response(response);
                 }
                 break;
 
