@@ -288,7 +288,7 @@ public class MyPDKScript : MonoBehaviour
         int uuid = (int)json["dzUuid"];                               // 这是已经操作，服务器返回的玩家uuid？ 
         int multiple = (int)json["multiple"];
         print("+++DDZ_qiangResponse+++" + uuid  + "-----"+ multiple);  
-        int index = getIndexByDir(getDirection( getIndex(uuid)));
+        int index =  getIndex(uuid);
         if (uuid == GlobalDataScript.loginResponseData.account.uuid && index ==0)                    
         {
             panel_landlordChoose.SetActive(false);
@@ -315,7 +315,7 @@ public class MyPDKScript : MonoBehaviour
         playerItems[bankerIdInedx].setbankImgEnable(true);
         bankerAddCard(bankerIdInedx);
 
-        int TCardAvatarIndex = (int)json["curTCardAvatarIndex"];
+        int TCardAvatarIndex = getIndexByDir(getDirection((int)json["curTCardAvatarIndex"]));
         if(TCardAvatarIndex == getMyIndexFromList())
         {
             panel_Ti.SetActive(true);
@@ -330,26 +330,39 @@ public class MyPDKScript : MonoBehaviour
         sok.sendMsg(new TiPaiRequest(isTi ? 1 : 0));
     }
 
-    // 踢牌的回调 {"multiple":1}
+    // 踢牌的回调 {"multiple":2,"uuid":100311}
     void DDZ_TIResponse(ClientResponse response)
     {
-        panel_Ti.SetActive(false);
         JsonData json = JsonMapper.ToObject(response.message);
         int multiple = (int)json["multiple"];
+        int uuid= (int)json["uuid"];
+        int index =getIndex(uuid);
+        if(index == getMyIndexFromList())   //todo
+        {
+            panel_Ti.SetActive(false);
+            panel_GenTi.SetActive(false);
+            panel_HuiPai.SetActive(false);
+        }
     }
 
     // 踢牌通知所有人  {"curTCardAvatarIndex":1,"multiple":1}
     void DDZ_ALL_TI_Response(ClientResponse response)
     {
         JsonData json = JsonMapper.ToObject(response.message);
-        int GCardAvatarIndex = (int)json["curTCardAvatarIndex"];
+        int GCardAvatarIndex = getIndexByDir(getDirection((int)json["curTCardAvatarIndex"]));
         int multiple = (int)json["multiple"];
+        print("++++DDZ_ALL_TI_Response+" + GCardAvatarIndex + "---" + getMyIndexFromList()+ " multiple"+multiple+ " bankerId"+bankerId);
         if (GCardAvatarIndex == getMyIndexFromList() && multiple==2){
             panel_GenTi.SetActive(true);
         }
-        else{
+        else if (GCardAvatarIndex == getMyIndexFromList() && multiple == 1)
+        {
             panel_Ti.SetActive(true);
         }
+        else if(bankerId == GCardAvatarIndex){
+            panel_HuiPai.SetActive(true);
+        }
+      
     }
 
     void initPanel ()
@@ -1315,21 +1328,21 @@ public class MyPDKScript : MonoBehaviour
 	private void initMyCardListAndOtherCard (int topCount, int leftCount, int rightCount)
 	{
       
-        displaySelfhanderCard ();//显示自己的手牌
+        displaySelfhanderCard ();
         AddDeskCard();
 
         initOtherCardList (DirectionEnum.Left, leftCount);
 		initOtherCardList (DirectionEnum.Right, rightCount);
 	}
 
-	private void displaySelfhanderCard ()                  //-lan  自己的手牌     change   
+	private void displaySelfhanderCard ()            
     {
         int index = getMyIndexFromList();
        
         List<int> sort = new List<int>();
         //for (int i = 12; i >= 0; i--) {
         //for (int j = 0; j < 4; j++) {
-        for (int point = 0; point < 54; point++) {            //todo  牌的数值好像有问题
+        for (int point = 0; point < 54; point++) {          
               //int point = i + 13 * j;
             if (mineList[0][point] == 1) {
                 print(" --------+++displaySelfhanderCard++++++++++++" + point);
@@ -1379,10 +1392,9 @@ public class MyPDKScript : MonoBehaviour
         {
             int point = landlord_deskCardList[t].GetComponent<pdkCardScript>().getPoint();
             playerItems[bankerIndex].hanCards.Add(point);
-            print(" bankerAddCard ---------------" + t);
+            print(" bankerAddCard ---------------" + t); //  存在问题  为什么只for了两次   总共四次
             landlord_deskCardList.Remove(landlord_deskCardList[t]);
             Destroy(landlord_deskCardList[t]);
-
             playerItems[bankerIndex].hanCards.Sort(delegate (int a, int b) { return (a % 13).CompareTo(b % 13); });
         }
         SetPosition();
