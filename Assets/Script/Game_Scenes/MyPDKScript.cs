@@ -1128,7 +1128,7 @@ public class MyPDKScript : MonoBehaviour
 			if (gob != null) {
 				if (gob.GetComponent<pdkCardScript> ().selected) {
 					pai.Add (gob.GetComponent<pdkCardScript> ().getPoint ());
-                    handerCardList [0].Remove (gob);
+                    handerCardList [0].Remove (gob);                          //存在问题   为什么现在不再执行remove？
 					Destroy (gob);
 					i--;
 				}
@@ -1392,9 +1392,13 @@ public class MyPDKScript : MonoBehaviour
         {
             int point = landlord_deskCardList[t].GetComponent<pdkCardScript>().getPoint();
             playerItems[bankerIndex].hanCards.Add(point);
-            print(" bankerAddCard ---------------" + t); //  存在问题  为什么只for了两次   总共四次
-            landlord_deskCardList.Remove(landlord_deskCardList[t]);
-            Destroy(landlord_deskCardList[t]);
+            print(" bankerAddCard ---------------" + t);                               //  存在问题  为什么只for了两次，总共四次 需要加加个判断
+            if (playerItems[bankerIndex].hanCards.Count > 16)
+            {
+                landlord_deskCardList.Remove(landlord_deskCardList[t]);
+                Destroy(landlord_deskCardList[t]);
+            }
+         
             playerItems[bankerIndex].hanCards.Sort(delegate (int a, int b) { return (a % 13).CompareTo(b % 13); });
         }
         SetPosition();
