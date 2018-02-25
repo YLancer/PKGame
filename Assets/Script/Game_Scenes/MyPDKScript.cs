@@ -1113,8 +1113,6 @@ public class MyPDKScript : MonoBehaviour
 				}
 			}
 		}
-
-
 		return result;
 	}
 
@@ -1126,9 +1124,11 @@ public class MyPDKScript : MonoBehaviour
 		for (int i = 0; i < handerCardList [0].Count; i++) {
 			GameObject gob = handerCardList [0] [i];
 			if (gob != null) {
+                print("+ _____putOutCard "+ gob.GetComponent<pdkCardScript>().selected);
 				if (gob.GetComponent<pdkCardScript> ().selected) {
 					pai.Add (gob.GetComponent<pdkCardScript> ().getPoint ());
-                    handerCardList [0].Remove (gob);                          //存在问题   为什么现在不再执行remove？
+                    playerItems[getMyIndexFromList()].hanCards.Remove(gob.GetComponent<pdkCardScript>().getPoint());
+                    handerCardList [0].Remove (gob);                              //存在问题   为什么现在不再执行remove？
 					Destroy (gob);
 					i--;
 				}
@@ -1228,6 +1228,7 @@ public class MyPDKScript : MonoBehaviour
 
 	public void SetPosition ()//设置位置
     {
+        cleanList(handerCardList[0]);
         int index = getMyIndexFromList();
         int count = 0;
         for (int i=0;i< playerItems[index].hanCards.Count;i++)
@@ -1392,13 +1393,9 @@ public class MyPDKScript : MonoBehaviour
         {
             int point = landlord_deskCardList[t].GetComponent<pdkCardScript>().getPoint();
             playerItems[bankerIndex].hanCards.Add(point);
-            print(" bankerAddCard ---------------" + t);                               //  存在问题  为什么只for了两次，总共四次 需要加加个判断
-            if (playerItems[bankerIndex].hanCards.Count > 16)
-            {
-                landlord_deskCardList.Remove(landlord_deskCardList[t]);
-                Destroy(landlord_deskCardList[t]);
-            }
-         
+            print(" bankerAddCard ---------------" + t);                               
+            //landlord_deskCardList.Remove(landlord_deskCardList[t]);
+            Destroy(landlord_deskCardList[t]);
             playerItems[bankerIndex].hanCards.Sort(delegate (int a, int b) { return (a % 13).CompareTo(b % 13); });
         }
         SetPosition();
