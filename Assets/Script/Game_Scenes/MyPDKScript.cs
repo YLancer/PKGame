@@ -672,6 +672,7 @@ public class MyPDKScript : MonoBehaviour
 
 		if (!isClickTiShi) {
 			result = returnResult (chuCard, myCardArray);//玩家手牌返回所有大于当前出牌的链表   todo
+            print(" showTiShi ++++++++" + result);
 			tishiIndex = 0;
 			isClickTiShi = true;
 		}
@@ -682,176 +683,183 @@ public class MyPDKScript : MonoBehaviour
 		pdkCardType pct = new pdkCardType ();
 		pdkCardType.CARDTYPE type1 = pct.getType (chuCard_old);
 
-		if (type1 == pdkCardType.CARDTYPE.c1
-		    || type1 == pdkCardType.CARDTYPE.c2
-		    || type1 == pdkCardType.CARDTYPE.c4) {//单牌、双牌、炸弹
+        if (type1 == pdkCardType.CARDTYPE.c1
+            || type1 == pdkCardType.CARDTYPE.c2
+            || type1 == pdkCardType.CARDTYPE.c4) {//单牌、双牌、炸弹
 
-			int[] re = result [tishiIndex];
-			int count = 0;
-			for (int i = handerCardList [0].Count - 1; i >= 0; i--) {
-				GameObject gob = handerCardList [0] [i];
-				if (gob != null) {
-					pdkCardScript pcs = gob.GetComponent<pdkCardScript> ();
-					if (pcs.getPoint () % 13 == re [1]) {
-						gob.transform.localPosition = new Vector3 (gob.transform.localPosition.x, 40);
-						pcs.selected = true;
-						count++;
-						if (count >= re [0])
-							break;
-					}
-				}
-			}
-		} else if (type1 == pdkCardType.CARDTYPE.c311) {//3带11
-			int[] re = result [tishiIndex];
+            int[] re = result[tishiIndex];
+            print("showTiShi ++++++++ //单牌、双牌、炸弹" + re);
+            int count = 0;
+            for (int i = handerCardList[0].Count - 1; i >= 0; i--) {
+                GameObject gob = handerCardList[0][i];
+                if (gob != null) {
+                    pdkCardScript pcs = gob.GetComponent<pdkCardScript>();
+                    if (pcs.getPoint() % 13 == re[1]) {
+                        gob.transform.localPosition = new Vector3(gob.transform.localPosition.x, 40);
+                        pcs.selected = true;
+                        count++;
+                        if (count >= re[0])
+                            break;
+                    }
+                }
+            }
+        } else if (type1 == pdkCardType.CARDTYPE.c311) {//3带11
+            int[] re = result[tishiIndex];
+            print("showTiShi ++++++++ //3带11 " + re);
+            int count = 0;
+            for (int i = handerCardList[0].Count - 1; i >= 0; i--) {
+                GameObject gob = handerCardList[0][i];
+                if (gob != null) {
+                    pdkCardScript pcs = gob.GetComponent<pdkCardScript>();
+                    if (pcs.getPoint() % 13 == re[1]) {
+                        gob.transform.localPosition = new Vector3(gob.transform.localPosition.x, 40);
+                        pcs.selected = true;
+                        count++;
+                        if (count >= re[0])
+                            break;
+                    }
+                }
+            }
+            if (re[0] == 3) {
+                //要2个杂牌起立
+                count = 0;
+                for (int i = handerCardList[0].Count - 1; i >= 0; i--) {
+                    GameObject gob = handerCardList[0][i];
+                    if (gob != null) {
+                        pdkCardScript pcs = gob.GetComponent<pdkCardScript>();
+                        if (!pcs.selected) {
+                            gob.transform.localPosition = new Vector3(gob.transform.localPosition.x, 40);
+                            pcs.selected = true;
+                            count++;
+                            if (count >= 2)
+                                break;
+                        }
+                    }
+                }
+            }
+        }
+        else if(type1 == pdkCardType.CARDTYPE.c111122)    // 四带二的
+        { }
 
-			int count = 0;
-			for (int i = handerCardList [0].Count - 1; i >= 0; i--) {
-				GameObject gob = handerCardList [0] [i];
-				if (gob != null) {
-					pdkCardScript pcs = gob.GetComponent<pdkCardScript> ();
-					if (pcs.getPoint () % 13 == re [1]) {
-						gob.transform.localPosition = new Vector3 (gob.transform.localPosition.x, 40);
-						pcs.selected = true;
-						count++;
-						if (count >= re [0])
-							break;
-					}
-				}
-			}
-			if (re [0] == 3) {
-				//要2个杂牌起立
-				count = 0;
-				for (int i = handerCardList [0].Count - 1; i >= 0; i--) {
-					GameObject gob =handerCardList [0] [i];
-					if (gob != null) {
-						pdkCardScript pcs = gob.GetComponent<pdkCardScript> ();
-						if (!pcs.selected) {
-							gob.transform.localPosition = new Vector3 (gob.transform.localPosition.x, 40);
-							pcs.selected = true;
-							count++;
-							if (count >= 2)
-								break;
-						}
-					}
-				}
-			}
-		} else if (type1 == pdkCardType.CARDTYPE.c12345) {//顺子
-			int[] re = result [tishiIndex];
-			if (re [0] == 4) {//炸弹
-				int count = 0;
-				for (int i = handerCardList [0].Count - 1; i >= 0; i--) {
-					GameObject gob = handerCardList [0] [i];
-					if (gob != null) {
-						pdkCardScript pcs = gob.GetComponent<pdkCardScript> ();
-						if (pcs.getPoint () % 13 == re [0]) {
-							gob.transform.localPosition = new Vector3 (gob.transform.localPosition.x, 40);
-							pcs.selected = true;
-							count++;
-							if (count >= re [0])
-								break;
-						}
-					}
-				}
-			} else {//顺子
-				for (int j = 1; j < re.Length; j++) {
-					for (int i = handerCardList [0].Count - 1; i >= 0; i--) {
-						GameObject gob = handerCardList [0] [i];
-						if (gob != null) {
-							pdkCardScript pcs = gob.GetComponent<pdkCardScript> ();
-							if (pcs.getPoint () % 13 == re [j]) {
-								gob.transform.localPosition = new Vector3 (gob.transform.localPosition.x, 40);
-								pcs.selected = true;
-								break;
-							}
-						}
-					}
-				}
-			}
-		} else if (type1 == pdkCardType.CARDTYPE.c112233) {//连对
-			int[] re = result [tishiIndex];
 
-			if (re [0] == 4 && re.Length == 2) {//炸弹
-				int count = 0;
-				for (int i =handerCardList [0].Count - 1; i >= 0; i--) {
-					GameObject gob = handerCardList [0] [i];
-					if (gob != null) {
-						pdkCardScript pcs = gob.GetComponent<pdkCardScript> ();
-						if (pcs.getPoint () % 13 == re [0]) {
-							gob.transform.localPosition = new Vector3 (gob.transform.localPosition.x, 40);
-							pcs.selected = true;
-							count++;
-							if (count >= re [0])
-								break;
-						}
-					}
-				}
-			} else {//连对
-				for (int j = 1; j < re.Length; j++) {
-					int count = 0;
-					for (int i =handerCardList [0].Count - 1; i >= 0; i--) {
-						GameObject gob = handerCardList [0] [i];
-						if (gob != null) {
-							pdkCardScript pcs = gob.GetComponent<pdkCardScript> ();
-							if (pcs.getPoint () % 13 == re [j]) {
-								gob.transform.localPosition = new Vector3 (gob.transform.localPosition.x, 40);
-								pcs.selected = true;
-								if (++count >= 2)
-									break;
-							}
-						}
-					}
-				}
-			}
-		} else if (type1 == pdkCardType.CARDTYPE.c1112223456) {//飞机带翅膀
-			int[] re = result [tishiIndex];
-			if (re [0] == 4 && re.Length == 2) {//炸弹
-				int count = 0;
-				for (int i = handerCardList [0].Count - 1; i >= 0; i--) {
-					GameObject gob = handerCardList [0] [i];
-					if (gob != null) {
-						pdkCardScript pcs = gob.GetComponent<pdkCardScript> ();
-						if (pcs.getPoint () % 13 == re [0]) {
-							gob.transform.localPosition = new Vector3 (gob.transform.localPosition.x, 40);
-							pcs.selected = true;
-							count++;
-							if (count >= re [0])
-								break;
-						}
-					}
-				}
-			} else {//飞机
-				for (int j = 1; j < re.Length; j++) {
-					int count = 0;
-					for (int i = handerCardList [0].Count - 1; i >= 0; i--) {
-						GameObject gob = handerCardList [0] [i];
-						if (gob != null) {
-							pdkCardScript pcs = gob.GetComponent<pdkCardScript> ();
-							if (pcs.getPoint () % 13 == re [j]) {
-								gob.transform.localPosition = new Vector3 (gob.transform.localPosition.x, 40);
-								pcs.selected = true;
-								if (++count >= 3)
-									break;
-							}
-						}
-					}
-				}
+        else if (type1 == pdkCardType.CARDTYPE.c12345) {//顺子
+            int[] re = result[tishiIndex];
+            print("showTiShi ++++++++ //顺子 " + re);
+            if (re[0] == 4) {//炸弹
+                int count = 0;
+                for (int i = handerCardList[0].Count - 1; i >= 0; i--) {
+                    GameObject gob = handerCardList[0][i];
+                    if (gob != null) {
+                        pdkCardScript pcs = gob.GetComponent<pdkCardScript>();
+                        if (pcs.getPoint() % 13 == re[0]) {
+                            gob.transform.localPosition = new Vector3(gob.transform.localPosition.x, 40);
+                            pcs.selected = true;
+                            count++;
+                            if (count >= re[0])
+                                break;
+                        }
+                    }
+                }
+            } else {//顺子
+                for (int j = 1; j < re.Length; j++) {
+                    for (int i = handerCardList[0].Count - 1; i >= 0; i--) {
+                        GameObject gob = handerCardList[0][i];
+                        if (gob != null) {
+                            pdkCardScript pcs = gob.GetComponent<pdkCardScript>();
+                            if (pcs.getPoint() % 13 == re[j]) {
+                                gob.transform.localPosition = new Vector3(gob.transform.localPosition.x, 40);
+                                pcs.selected = true;
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        } else if (type1 == pdkCardType.CARDTYPE.c112233) {//连对
+            int[] re = result[tishiIndex];
 
-				//起立几个杂牌
-				int counts = 0;
-				for (int i = handerCardList [0].Count - 1; i >= 0; i--) {
-					GameObject gob = handerCardList [0] [i];
-					if (gob != null) {
-						pdkCardScript pcs = gob.GetComponent<pdkCardScript> ();
-						if (!pcs.selected) {
-							gob.transform.localPosition = new Vector3 (gob.transform.localPosition.x, 40);
-							pcs.selected = true;
-							if (++counts >= (re.Length - 1) * 2)
-								break;
-						}
-					}
-				}
-			}
-		}
+            if (re[0] == 4 && re.Length == 2) {//炸弹
+                int count = 0;
+                for (int i = handerCardList[0].Count - 1; i >= 0; i--) {
+                    GameObject gob = handerCardList[0][i];
+                    if (gob != null) {
+                        pdkCardScript pcs = gob.GetComponent<pdkCardScript>();
+                        if (pcs.getPoint() % 13 == re[0]) {
+                            gob.transform.localPosition = new Vector3(gob.transform.localPosition.x, 40);
+                            pcs.selected = true;
+                            count++;
+                            if (count >= re[0])
+                                break;
+                        }
+                    }
+                }
+            } else {//连对
+                for (int j = 1; j < re.Length; j++) {
+                    int count = 0;
+                    for (int i = handerCardList[0].Count - 1; i >= 0; i--) {
+                        GameObject gob = handerCardList[0][i];
+                        if (gob != null) {
+                            pdkCardScript pcs = gob.GetComponent<pdkCardScript>();
+                            if (pcs.getPoint() % 13 == re[j]) {
+                                gob.transform.localPosition = new Vector3(gob.transform.localPosition.x, 40);
+                                pcs.selected = true;
+                                if (++count >= 2)
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+        } else if (type1 == pdkCardType.CARDTYPE.c1112223456) {//飞机带翅膀
+            int[] re = result[tishiIndex];
+            if (re[0] == 4 && re.Length == 2) {//炸弹
+                int count = 0;
+                for (int i = handerCardList[0].Count - 1; i >= 0; i--) {
+                    GameObject gob = handerCardList[0][i];
+                    if (gob != null) {
+                        pdkCardScript pcs = gob.GetComponent<pdkCardScript>();
+                        if (pcs.getPoint() % 13 == re[0]) {
+                            gob.transform.localPosition = new Vector3(gob.transform.localPosition.x, 40);
+                            pcs.selected = true;
+                            count++;
+                            if (count >= re[0])
+                                break;
+                        }
+                    }
+                }
+            } else {//飞机
+                for (int j = 1; j < re.Length; j++) {
+                    int count = 0;
+                    for (int i = handerCardList[0].Count - 1; i >= 0; i--) {
+                        GameObject gob = handerCardList[0][i];
+                        if (gob != null) {
+                            pdkCardScript pcs = gob.GetComponent<pdkCardScript>();
+                            if (pcs.getPoint() % 13 == re[j]) {
+                                gob.transform.localPosition = new Vector3(gob.transform.localPosition.x, 40);
+                                pcs.selected = true;
+                                if (++count >= 3)
+                                    break;
+                            }
+                        }
+                    }
+                }
+
+                //起立几个杂牌
+                int counts = 0;
+                for (int i = handerCardList[0].Count - 1; i >= 0; i--) {
+                    GameObject gob = handerCardList[0][i];
+                    if (gob != null) {
+                        pdkCardScript pcs = gob.GetComponent<pdkCardScript>();
+                        if (!pcs.selected) {
+                            gob.transform.localPosition = new Vector3(gob.transform.localPosition.x, 40);
+                            pcs.selected = true;
+                            if (++counts >= (re.Length - 1) * 2)
+                                break;
+                        }
+                    }
+                }
+            }
+        }
 
 		isCanChu ();
 
@@ -870,256 +878,336 @@ public class MyPDKScript : MonoBehaviour
 
 		List<int>[] a = pct.getCount (chuCard);
 		List<int>[] b = pct.getCount (myCardArray);
+        print("returnResultreturnResultreturnResultreturnResult " + a + b);
 
 		int length = myCardArray.Length;
 
-		if (type1 == pdkCardType.CARDTYPE.c1) {//单牌
+        if (type1 == pdkCardType.CARDTYPE.c1)
+        {//单牌
 
-			//单张
-			for (int k = 0; k < b [0].Count; k++) {
-				int[] re = new int[2];
-				if (b [0] [k] > chuCard [0]) {
-					re [1] = b [0] [k];
-					re [0] = 1;
-					result.Add (re);
-				}
-			}
+            //单张
+            for (int k = 0; k < b[0].Count; k++)
+            {
+                int[] re = new int[2];
+                if (b[0][k] > chuCard[0])
+                {
+                    re[1] = b[0][k];
+                    re[0] = 1;
+                    result.Add(re);
+                }
+            }
 
-			//双张
-			for (int k = 0; k < b [1].Count; k++) {
-				int[] re = new int[2];
-				if (b [1] [k] > chuCard [0]) {
-					re [1] = b [1] [k];
-					re [0] = 1;
-					result.Add (re);
-				}
-			}
+            //双张
+            for (int k = 0; k < b[1].Count; k++)
+            {
+                int[] re = new int[2];
+                if (b[1][k] > chuCard[0])
+                {
+                    re[1] = b[1][k];
+                    re[0] = 1;
+                    result.Add(re);
+                }
+            }
 
-			//三张
-			for (int k = 0; k < b [2].Count; k++) {
-				int[] re = new int[2];
-				if (b [2] [k] > chuCard [0]) {
-					re [1] = b [2] [k];
-					re [0] = 1;
-					result.Add (re);
-				}
-			}
+            //三张
+            for (int k = 0; k < b[2].Count; k++)
+            {
+                int[] re = new int[2];
+                if (b[2][k] > chuCard[0])
+                {
+                    re[1] = b[2][k];
+                    re[0] = 1;
+                    result.Add(re);
+                }
+            }
 
-			//4张
-			for (int k = 0; k < b [3].Count; k++) {
-				int[] re = new int[2];
-				if (b [3] [k] > chuCard [0]) {
-					re [1] = b [3] [k];
-					re [0] = 1;
-					result.Add (re);
-				}
-			}
+            //4张        //临汾斗地主 特殊的炸弹两张3，两张2    是否可以放在这里？？？
+            for (int k = 0; k < b[3].Count; k++)
+            {
+                int[] re = new int[2];
+                if (b[3][k] > chuCard[0])
+                {
+                    re[1] = b[3][k];
+                    re[0] = 1;
+                    result.Add(re);
+                }
+            }
 
-			//炸弹
-			for (int k = 0; k < b [3].Count; k++) {
-				int[] re = new int[2];
-				re [1] = b [3] [k];
-				re [0] = 4;
-				result.Add (re);
-			}
-            //临汾斗地主 特殊的炸弹两张3，两张2 
+            //炸弹
+            for (int k = 0; k < b[3].Count; k++)
+            {
+                int[] re = new int[2];
+                re[1] = b[3][k];
+                re[0] = 4;
+                result.Add(re);
+            }
+        }
+        else if (type1 == pdkCardType.CARDTYPE.c2)
+        {// 对子
+         //双张
+            for (int k = 0; k < b[1].Count; k++)
+            {
+                int[] re = new int[2];
+                if (b[1][k] > chuCard[0])
+                {
+                    re[1] = b[1][k];
+                    re[0] = 2;
+                    result.Add(re);
+                }
+            }
+
+            //三张
+            for (int k = 0; k < b[2].Count; k++)
+            {
+                int[] re = new int[2];
+                if (b[2][k] > chuCard[0])
+                {
+                    re[1] = b[2][k];
+                    re[0] = 2;
+                    result.Add(re);
+                }
+            }
+
+            //4张
+            for (int k = 0; k < b[3].Count; k++)
+            {
+                int[] re = new int[2];
+                if (b[3][k] > chuCard[0])
+                {
+                    re[1] = b[3][k];
+                    re[0] = 2;
+                    result.Add(re);
+                }
+            }
+            //炸弹
+            for (int k = 0; k < b[3].Count; k++)
+            {
+                int[] re = new int[2];
+                re[1] = b[3][k];
+                re[0] = 4;
+                result.Add(re);
+            }
+        }
+        else if (type1 == pdkCardType.CARDTYPE.c112233)
+        {//连对
+
+            //循环遍历玩家手牌 是否有大于出牌的
+            for (int i = (int)a[1][0] + 1; i < 13; i++)
+            {
+                int findCount = 0;
+                int[] re = new int[a[1].Count + 1];
+                re[0] = a[1].Count;
+                for (int j = 0; j < chuCard.Length / 2; j++)
+                {
+                    //遍历2张的。
+                    for (int k = 0; k < b[1].Count; k++)
+                    {
+                        if ((int)b[1][k] != 12 && (int)b[1][k] == i + j)
+                        {
+                            findCount++;
+                            re[findCount] = b[1][k];
+                            break;
+                        }
+                    }
+                    //遍历3张的。
+                    for (int k = 0; k < b[2].Count; k++)
+                    {
+                        if ((int)b[2][k] != 12 && (int)b[2][k] == i + j)
+                        {
+                            findCount++;
+                            re[findCount] = b[2][k];
+                            break;
+                        }
+                    }
+                    //遍历4张的。
+                    for (int k = 0; k < b[3].Count; k++)
+                    {
+                        if ((int)b[3][k] != 12 && (int)b[3][k] == i + j)
+                        {
+                            findCount++;
+                            re[findCount] = b[3][k];
+                            break;
+                        }
+                    }
+                }
+
+                if (findCount >= chuCard.Length / 2)
+                {
+                    result.Add(re);
+                }
+            }
+
+            //炸弹
+            for (int k = 0; k < b[3].Count; k++)
+            {
+                int[] re = new int[2];
+                re[1] = b[3][k];
+                re[0] = 4;
+                result.Add(re);
+            }
 
         }
-        else if (type1 == pdkCardType.CARDTYPE.c2) {// 对子
-			//双张
-			for (int k = 0; k < b [1].Count; k++) {
-				int[] re = new int[2];
-				if (b [1] [k] > chuCard [0]) {
-					re [1] = b [1] [k];
-					re [0] = 2;
-					result.Add (re);
-				}
-			}
+        else if (type1 == pdkCardType.CARDTYPE.c311)
+        {//三带2
 
-			//三张
-			for (int k = 0; k < b [2].Count; k++) {
-				int[] re = new int[2];
-				if (b [2] [k] > chuCard [0]) {
-					re [1] = b [2] [k];
-					re [0] = 2;
-					result.Add (re);
-				}
-			}
+            //三张
+            for (int k = 0; k < b[2].Count; k++)
+            {
+                int[] re = new int[2];
+                if (b[2][k] > a[2][0])
+                {
+                    re[1] = b[2][k];
+                    re[0] = 3;
+                    result.Add(re);
+                }
+            }
 
-			//4张
-			for (int k = 0; k < b [3].Count; k++) {
-				int[] re = new int[2];
-				if (b [3] [k] > chuCard [0]) {
-					re [1] = b [3] [k];
-					re [0] = 2;
-					result.Add (re);
-				}
-			}
-			//炸弹
-			for (int k = 0; k < b [3].Count; k++) {
-				int[] re = new int[2];
-				re [1] = b [3] [k];
-				re [0] = 4;
-				result.Add (re);
-			}
-		} else if (type1 == pdkCardType.CARDTYPE.c112233) {//连对
+            //4张
+            for (int k = 0; k < b[3].Count; k++)
+            {
+                int[] re = new int[2];
+                if (b[3][k] > a[2][0])
+                {
+                    re[1] = b[3][k];
+                    re[0] = 3;
+                    result.Add(re);
+                }
+            }
 
-			//循环遍历玩家手牌 是否有大于出牌的
-			for (int i = (int)a [1] [0] + 1; i < 13; i++) {
-				int findCount = 0;
-				int[] re = new int[a [1].Count + 1];
-				re [0] = a [1].Count;
-				for (int j = 0; j < chuCard.Length / 2; j++) {
-					//遍历2张的。
-					for (int k = 0; k < b [1].Count; k++) {
-						if ((int)b [1] [k] != 12 && (int)b [1] [k] == i + j) {
-							findCount++;
-							re [findCount] = b [1] [k];
-							break;
-						}
-					}
-					//遍历3张的。
-					for (int k = 0; k < b [2].Count; k++) {
-						if ((int)b [2] [k] != 12 && (int)b [2] [k] == i + j) {
-							findCount++;
-							re [findCount] = b [2] [k];
-							break;
-						}
-					}
-					//遍历4张的。
-					for (int k = 0; k < b [3].Count; k++) {
-						if ((int)b [3] [k] != 12 && (int)b [3] [k] == i + j) {
-							findCount++;
-							re [findCount] = b [3] [k];
-							break;
-						}
-					}
-				}
+            //炸弹
+            for (int k = 0; k < b[3].Count; k++)
+            {
+                int[] re = new int[2];
+                re[1] = b[3][k];
+                re[0] = 4;
+                result.Add(re);
+            }
 
-				if (findCount >= chuCard.Length / 2) {
-					result.Add (re);
-				}
-			}
+        }
+        else if (type1 == pdkCardType.CARDTYPE.c1112223456)
+        {//飞机带翅膀
 
-			//炸弹
-			for (int k = 0; k < b [3].Count; k++) {
-				int[] re = new int[2];
-				re [1] = b [3] [k];
-				re [0] = 4;
-				result.Add (re);
-			}
+            //循环遍历玩家手牌 是否有大于出牌的
+            for (int i = (int)a[2][0] + 1; i < 13; i++)
+            {
+                int findCount = 0;
+                int[] re = new int[a[2].Count + 1];
+                re[0] = a[2].Count;
+                for (int j = 0; j < chuCard.Length / 5; j++)
+                {
+                    //遍历3张的。
+                    for (int k = 0; k < b[2].Count; k++)
+                    {
+                        if ((int)b[2][k] != 12 && (int)b[2][k] == i + j)
+                        {
+                            findCount++;
+                            re[findCount] = b[2][k];
+                            break;
+                        }
+                    }
+                    //遍历4张的。
+                    for (int k = 0; k < b[3].Count; k++)
+                    {
+                        if ((int)b[3][k] != 12 && (int)b[3][k] == i + j)
+                        {
+                            findCount++;
+                            re[findCount] = b[3][k];
+                            break;
+                        }
+                    }
+                }
 
-		} else if (type1 == pdkCardType.CARDTYPE.c311) {//三带2
+                if (findCount >= chuCard.Length / 5)
+                {
+                    result.Add(re);
+                }
 
-			//三张
-			for (int k = 0; k < b [2].Count; k++) {
-				int[] re = new int[2];
-				if (b [2] [k] > a [2] [0]) {
-					re [1] = b [2] [k];
-					re [0] = 3;
-					result.Add (re);
-				}
-			}
+            }
 
-			//4张
-			for (int k = 0; k < b [3].Count; k++) {
-				int[] re = new int[2];
-				if (b [3] [k] > a [2] [0]) {
-					re [1] = b [3] [k];
-					re [0] = 3;
-					result.Add (re);
-				}
-			}
-				
-			//炸弹
-			for (int k = 0; k < b [3].Count; k++) {
-				int[] re = new int[2];
-				re [1] = b [3] [k];
-				re [0] = 4;
-				result.Add (re);
-			}
+            //炸弹
+            for (int k = 0; k < b[3].Count; k++)
+            {
+                int[] re = new int[2];
+                re[1] = b[3][k];
+                re[0] = 4;
+                result.Add(re);
+            }
+        }
+        else if (type1 == pdkCardType.CARDTYPE.c12345)
+        {//顺子
 
-		} else if (type1 == pdkCardType.CARDTYPE.c1112223456) {//飞机带翅膀
-			
-			//循环遍历玩家手牌 是否有大于出牌的
-			for (int i = (int)a [2] [0] + 1; i < 13; i++) {
-				int findCount = 0;
-				int[] re = new int[a [2].Count + 1];
-				re [0] = a [2].Count;
-				for (int j = 0; j < chuCard.Length / 5; j++) {
-					//遍历3张的。
-					for (int k = 0; k < b [2].Count; k++) {
-						if ((int)b [2] [k] != 12 && (int)b [2] [k] == i + j) {
-							findCount++;
-							re [findCount] = b [2] [k];
-							break;
-						}
-					}
-					//遍历4张的。
-					for (int k = 0; k < b [3].Count; k++) {
-						if ((int)b [3] [k] != 12 && (int)b [3] [k] == i + j) {
-							findCount++;
-							re [findCount] = b [3] [k];
-							break;
-						}
-					}
-				}
+            //循环遍历玩家手牌 是否有大于出牌的
+            for (int i = chuCard[0] + 1; i < 13; i++)
+            {
+                int[] re = new int[chuCard.Length + 1];
+                re[0] = chuCard.Length;
+                int findCount = 0;
+                for (int j = 0; j < chuCard.Length; j++)
+                {
+                    for (int k = 0; k < length; k++)
+                    {
+                        if (myCardArray[k] != 12 && myCardArray[k] == i + j)
+                        {
+                            findCount++;
+                            re[findCount] = myCardArray[k];
+                            break;
+                        }
+                    }
+                }
 
-				if (findCount >= chuCard.Length / 5) {
-					result.Add (re);
-				}
+                if (findCount >= chuCard.Length)
+                {
+                    result.Add(re);
+                }
+            }
 
-			}
+            //炸弹
+            for (int k = 0; k < b[3].Count; k++)
+            {
+                int[] re = new int[2];
+                re[1] = b[3][k];
+                re[0] = 4;
+                result.Add(re);
+            }
+        }
+        else if (type1 == pdkCardType.CARDTYPE.c4)
+        {//炸弹
 
-			//炸弹
-			for (int k = 0; k < b [3].Count; k++) {
-				int[] re = new int[2];
-				re [1] = b [3] [k];
-				re [0] = 4;
-				result.Add (re);
-			}
-		} else if (type1 == pdkCardType.CARDTYPE.c12345) {//顺子
-			
-			//循环遍历玩家手牌 是否有大于出牌的
-			for (int i = chuCard [0] + 1; i < 13; i++) {
-				int[] re = new int[chuCard.Length + 1];
-				re [0] = chuCard.Length;
-				int findCount = 0;
-				for (int j = 0; j < chuCard.Length; j++) {
-					for (int k = 0; k < length; k++) {
-						if (myCardArray [k] != 12 && myCardArray [k] == i + j) {
-							findCount++;
-							re [findCount] = myCardArray [k];
-							break;
-						}
-					}
-				}
+            //炸弹
+            for (int k = 0; k < b[3].Count; k++)
+            {
+                int[] re = new int[2];
+                if (b[3][k] > chuCard[0])
+                {
+                    re[1] = b[3][k];
+                    re[0] = 4;
+                    result.Add(re);
+                }
+            }
+        }
+        else if (type1 == pdkCardType.CARDTYPE.c111122) {//四带二lan
 
-				if (findCount >= chuCard.Length) {
-					result.Add (re);
-				}
-			}
-				
-			//炸弹
-			for (int k = 0; k < b [3].Count; k++) {
-				int[] re = new int[2];
-				re [1] = b [3] [k];
-				re [0] = 4;
-				result.Add (re);
-			}
-		} else if (type1 == pdkCardType.CARDTYPE.c4) {//炸弹
-			
-			//炸弹
-			for (int k = 0; k < b [3].Count; k++) {
-				int[] re = new int[2];
-				if (b [3] [k] > chuCard [0]) {
-					re [1] = b [3] [k];
-					re [0] = 4;
-					result.Add (re);
-				}
-			}
-		}
-		return result;
+            //4张
+            for (int k = 0; k < b[3].Count; k++)
+            {
+                int[] re = new int[2];
+                if (b[3][k] > a[2][0])
+                {
+                    re[1] = b[3][k];
+                    re[0] = 3;
+                    result.Add(re);
+                }
+            }
+            //炸弹
+            for (int k = 0; k < b[3].Count; k++)
+            {
+                int[] re = new int[2];
+                re[1] = b[3][k];
+                re[0] = 4;
+                result.Add(re);
+            }
+        }
+        return result;
 	}
 
 	//自己出牌

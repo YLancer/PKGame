@@ -45,15 +45,27 @@ namespace AssemblyCSharp
 			if(type1 == type2) {
 				int[] oldCard = new int[oldCardArray.Length];
 				for (int i = 0; i < oldCardArray.Length; i++) {
-					oldCard[i] = oldCardArray[i] % 13;
+                    if(oldCardArray[i] <52){
+                        oldCard[i] = oldCardArray[i] % 13;
+                    }
+                    else{
+                        oldCard[i] = oldCardArray[i];    // 大小王判断
+                    }
+					
 				}
 				// 从小到大排序
 				Array.Sort(oldCard);
 
 				int[] newCard = new int[newCardArray.Length];
 				for (int i = 0; i < newCardArray.Length; i++) {
-					newCard[i] = newCardArray[i] % 13;
-				}
+                    if (newCardArray[i] < 52)
+                    {
+                        newCard[i] = newCardArray[i] % 13;
+                    }
+                    else {
+                        newCard[i] = newCardArray[i];
+                    }
+                    				}
 				// 从小到大排序
 				Array.Sort(newCard);
 
@@ -84,14 +96,17 @@ namespace AssemblyCSharp
 				}else if(type1 == CARDTYPE.c4) {//炸弹
 					if(oldCard[0] < newCard[0])
 						return true;
-				}
+				}else if( type1==CARDTYPE.c111122)    //四带二lan
+                {
+                    if (oldCard[0] < newCard[0])
+                        return true;
+                }
 
 			}else {
 				if(type2 == CARDTYPE.c4) {//后面的是炸弹
 					return true;
 				}
 			}
-
 			return false;
 		}
 
