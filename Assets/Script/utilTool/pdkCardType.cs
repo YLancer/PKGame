@@ -23,8 +23,10 @@ namespace AssemblyCSharp
 			c11122234, // 飞机带单排
 			c111222N,//飞机随机带
 			c1112223456, // 飞机带4子
-			c1112223344// 飞机带对子.
-		}
+			c1112223344,// 飞机带对子.
+            //四带二
+            c111122
+        }
 
 		public pdkCardType ()
 		{
@@ -244,7 +246,12 @@ namespace AssemblyCSharp
 
 			int[] card = new int[incard.Length];
 			for (int i = 0; i < incard.Length; i++) {
-				card[i] = incard[i] % 13;
+                if(incard[i]<52) {
+                    card[i] = incard[i] % 13;
+                }
+                else{    //大小王
+                    card[i] = incard[i];
+                }
 			}
 
 			// 从小到大排序
@@ -260,6 +267,15 @@ namespace AssemblyCSharp
 				if (card[0] == card[1]) {
 					return CARDTYPE.c2;
 				}
+                else if ((card[0] == card[1] && card[0] == 0) || (card[0] == card[1] && card[0] == 12))
+                {
+                    return CARDTYPE.c4;    //炸弹  两张2 和两张3 lan
+                }
+                else if(card[0] == 52 && card[1]==53)
+                {
+                    return CARDTYPE.c4;    //炸弹  大小王 lan
+                }
+              
 			} else if (card.Length == 3) {
 				if (card[0] == card[1] && card[1] == card[2]) {
 					return CARDTYPE.c3;
@@ -308,6 +324,10 @@ namespace AssemblyCSharp
 					&& (int) a[2][a[2].Count - 1]<12) {//最多到A
 					return CARDTYPE.c111222N; // 111222 34
 				}
+                if(card.Length == 6 &&  a[3].Count==1 && card[length - 1] <= 53)
+                {
+                    return CARDTYPE.c111122;   // 四带二 所有牌都可以带 lan 
+                }
 			}
 
 			return CARDTYPE.c0;
@@ -327,7 +347,7 @@ namespace AssemblyCSharp
 			for (int i = 0; i < card.Length; i++) {
 				int count = 1;
 				for (int j = i + 1; j < card.Length; j++) {
-					if (card[i] == card[j]) {
+					if (card[i] == card[j] || (card[i] >= 52 && card[j] >= 52)) {   // 增加判断
 						count++;
 						i = j;// 跳过重复的数字
 					} else {
@@ -335,7 +355,7 @@ namespace AssemblyCSharp
 					}
 				}
 
-				if (count == 4) {
+				if (count == 4 || (count == 2 && (card[i]==0 || card[i] == 12 || card[i] >= 52))) {  //对2和对3是炸弹lan
 					a[3].Add(card[i]);
 				} else if (count == 3) {
 					a[2].Add(card[i]);

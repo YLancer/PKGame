@@ -1214,7 +1214,7 @@ public class CrateRoomSettingScript : MonoBehaviour {
         if (watingPanel != null) {
         	watingPanel.gameObject.SetActive(false);
         }
-        MyDebug.Log (response.message+ "----------------onCreateRoomCallbackonCreateRoomCallback----此处已经返回房间号信息ok");
+        MyDebug.Log (response.message+ "---onCreateRoomCallbackonCreateRoomCallback----此处已经返回房间号信息ok");
         if(response.message !=null)   //if (response.status == 1)
         {
 			//RoomCreateResponseVo responseVO = JsonMapper.ToObject<RoomCreateResponseVo> (response.message);

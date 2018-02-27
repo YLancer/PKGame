@@ -115,6 +115,7 @@ public class MyPDKScript : MonoBehaviour
 			reEnterRoom ();
 		} else if (GlobalDataScript.roomJoinResponseData != null) {//进入他人房间
 			joinToRoom (GlobalDataScript.roomJoinResponseData.playerList);
+            print(" GlobalDataScript.roomJoinResponseData.playerList" + GlobalDataScript.roomJoinResponseData.playerList);
 		} else {//创建房间
 			createRoomAddAvatarVO (GlobalDataScript.loginResponseData);
 		}
@@ -283,11 +284,9 @@ public class MyPDKScript : MonoBehaviour
     
     void DDZ_qiangResponse(ClientResponse response)                                 
     {
-        print("++++DDZ_qiangResponse+++" + response.message);
         JsonData json = JsonMapper.ToObject(response.message);
-        int uuid = (int)json["dzUuid"];                               // 这是已经操作，服务器返回的玩家uuid？ 
+        int uuid = (int)json["dzUuid"];                            
         int multiple = (int)json["multiple"];
-        print("+++DDZ_qiangResponse+++" + uuid  + "-----"+ multiple);  
         int index =  getIndex(uuid);
         if (uuid == GlobalDataScript.loginResponseData.account.uuid && index ==0)                    
         {
@@ -295,19 +294,20 @@ public class MyPDKScript : MonoBehaviour
         }
     }
 
-    // 庄家确定回调{"avatarIndex":0,","curTCardAvatarIndex":2}
+    // 庄家确定回调{"avatarIndex":0,"curAvatarIndex":0,"curTCardAvatarIndex":100372}
     void DDZ_zhuangResponse(ClientResponse response)   
     {
         JsonData json = JsonMapper.ToObject(response.message);
-        print(" -------DDZ_zhuangResponse-----" + response.message);
-        bankerId = (int)json["avatarIndex"];   
-        // 提示出牌的不能放在庄家确定的回调中  要放在踢牌完成后显示     
+        bankerId = (int)json["avatarIndex"];
+
         curDirString = getDirection(bankerId);
-        if (curDirString == DirectionEnum.Bottom){
+        if (curDirString == DirectionEnum.Bottom)
+        {
             btnActionScript.showBtn();
             GlobalDataScript.isDrag = true;
         }
-        else {
+        else
+        {
             GlobalDataScript.isDrag = false;
         }
         avatarList[bankerId].main = true;
@@ -315,15 +315,15 @@ public class MyPDKScript : MonoBehaviour
         playerItems[bankerIdInedx].setbankImgEnable(true);
         bankerAddCard(bankerIdInedx);
 
-        int TCardAvatarIndex = getIndexByDir(getDirection((int)json["curTCardAvatarIndex"]));
-        if(TCardAvatarIndex == getMyIndexFromList())
+        int TCarduuid = getIndex((int)json["curTCardAvatarIndex"]);
+        if(TCarduuid == getMyIndexFromList())
         {
             panel_Ti.SetActive(true);
         }
     }
 
     public void ti_DDZ(bool isTi)
-    {  // 是否踢牌    true踢即为加1倍    false不踢即为不再加倍,为0
+    {  
         SoundCtrl.getInstance().playSoundByActionButton(1);
         timer = -1;
         CustomSocket sok = CustomSocket.getInstance();
@@ -336,8 +336,9 @@ public class MyPDKScript : MonoBehaviour
         JsonData json = JsonMapper.ToObject(response.message);
         int multiple = (int)json["multiple"];
         int uuid= (int)json["uuid"];
+        print(" + ddz_TIRespone " + response.message);
         int index =getIndex(uuid);
-        if(index == getMyIndexFromList())   //todo
+        if(index == getMyIndexFromList())   
         {
             panel_Ti.SetActive(false);
             panel_GenTi.SetActive(false);
@@ -345,24 +346,23 @@ public class MyPDKScript : MonoBehaviour
         }
     }
 
-    // 踢牌通知所有人  {"curTCardAvatarIndex":1,"multiple":1}
+    // 踢牌通知所有人  {curTCardAvatarIndex":100371,"multiple":2}
     void DDZ_ALL_TI_Response(ClientResponse response)
     {
         JsonData json = JsonMapper.ToObject(response.message);
-        int GCardAvatarIndex = getIndexByDir(getDirection((int)json["curTCardAvatarIndex"]));
+        int GCarduuid = getIndex((int)json["curTCardAvatarIndex"]);
         int multiple = (int)json["multiple"];
-        print("++++DDZ_ALL_TI_Response+" + GCardAvatarIndex + "---" + getMyIndexFromList()+ " multiple"+multiple+ " bankerId"+bankerId);
-        if (GCardAvatarIndex == getMyIndexFromList() && multiple==2){
+        if (GCarduuid== getMyIndexFromList() && multiple==2){
             panel_GenTi.SetActive(true);
         }
-        else if (GCardAvatarIndex == getMyIndexFromList() && multiple == 1)
+        else if (GCarduuid == getMyIndexFromList() && multiple == 1)
         {
             panel_Ti.SetActive(true);
         }
-        else if(bankerId == GCardAvatarIndex){
+        else if((int)json["curTCardAvatarIndex"] == GlobalDataScript.loginResponseData.account.uuid)
+        {
             panel_HuiPai.SetActive(true);
         }
-      
     }
 
     void initPanel ()
@@ -394,7 +394,6 @@ public class MyPDKScript : MonoBehaviour
 		if (mineList != null) {
 			mineList.Clear ();
 		}
-
 	}
 
 	private void cleanArrayList (List<List<GameObject>> list)
@@ -434,8 +433,6 @@ public class MyPDKScript : MonoBehaviour
 		case DirectionEnum.Left:
 			playerItems [2].GetComponent<PlayerItemScript> ().setPlayerOffline ();
 			break;
-
-
 		}
 
 		//申请解散房间过程中，有人掉线，直接不能解散房间
@@ -446,7 +443,6 @@ public class MyPDKScript : MonoBehaviour
 				Destroy (dissoDialog);
 			}
 			TipsManagerScript.getInstance ().setTips ("由于" + avatarList [index].account.nickname + "离线，系统不能解散房间。");
-
 		}
 	}
 
@@ -466,7 +462,6 @@ public class MyPDKScript : MonoBehaviour
 		case DirectionEnum.Left:
 			playerItems [2].GetComponent<PlayerItemScript> ().setPlayerOnline ();
 			break;
-
 		}
 	}
 	/***
@@ -528,7 +523,6 @@ public class MyPDKScript : MonoBehaviour
 		} else {
 			lastCard = null;
 		}
-
 	}
 
 	public void displayChupai (string chupai)
@@ -572,7 +566,6 @@ public class MyPDKScript : MonoBehaviour
 		} catch (Exception ex) {
 			MyDebug.Log (ex.ToString ());
 		}
-
 	}
 
 	public void ChiBuQiCallBack (ClientResponse response)
@@ -654,21 +647,31 @@ public class MyPDKScript : MonoBehaviour
 		cardReset ();//牌全部先复位
 		int[] chuCard = new int[chuCard_old.Length];
 		for (int i = 0; i < chuCard_old.Length; i++) {
-			chuCard [i] = chuCard_old [i] % 13;
+            if(chuCard_old[i] <52){
+                chuCard[i] = chuCard_old[i] % 13;
+            }                                 //新增大小王  需要判断lan
+            else {
+                chuCard[i] = chuCard_old[i];
+            }
 		}
 		// 从小到大排序
 		Array.Sort (chuCard);
 
 		int[] myCardArray = new int[myCardArray_old.Length];
 		for (int i = 0; i < myCardArray_old.Length; i++) {
-			myCardArray [i] = myCardArray_old [i] % 13;
+            if(myCardArray_old[i]<52){
+                myCardArray[i] = myCardArray_old[i] % 13;
+            }                                 //新增大小王  需要判断lan
+            else {
+                myCardArray[i] = myCardArray_old[i];
+            }
 		}
 
 		// 从小到大排序
 		Array.Sort (myCardArray);
 
 		if (!isClickTiShi) {
-			result = returnResult (chuCard, myCardArray);//返回所有大于当前出牌的链表
+			result = returnResult (chuCard, myCardArray);//玩家手牌返回所有大于当前出牌的链表   todo
 			tishiIndex = 0;
 			isClickTiShi = true;
 		}
@@ -919,7 +922,10 @@ public class MyPDKScript : MonoBehaviour
 				re [0] = 4;
 				result.Add (re);
 			}
-		} else if (type1 == pdkCardType.CARDTYPE.c2) {// 对子
+            //临汾斗地主 特殊的炸弹两张3，两张2 
+
+        }
+        else if (type1 == pdkCardType.CARDTYPE.c2) {// 对子
 			//双张
 			for (int k = 0; k < b [1].Count; k++) {
 				int[] re = new int[2];
@@ -1113,8 +1119,6 @@ public class MyPDKScript : MonoBehaviour
 				}
 			}
 		}
-
-
 		return result;
 	}
 
@@ -1126,9 +1130,11 @@ public class MyPDKScript : MonoBehaviour
 		for (int i = 0; i < handerCardList [0].Count; i++) {
 			GameObject gob = handerCardList [0] [i];
 			if (gob != null) {
+                print("+ _____putOutCard "+ gob.GetComponent<pdkCardScript>().selected);
 				if (gob.GetComponent<pdkCardScript> ().selected) {
 					pai.Add (gob.GetComponent<pdkCardScript> ().getPoint ());
-                    handerCardList [0].Remove (gob);                          //存在问题   为什么现在不再执行remove？
+                    playerItems[getMyIndexFromList()].hanCards.Remove(gob.GetComponent<pdkCardScript>().getPoint());
+                    handerCardList [0].Remove (gob);                              
 					Destroy (gob);
 					i--;
 				}
@@ -1228,6 +1234,7 @@ public class MyPDKScript : MonoBehaviour
 
 	public void SetPosition ()//设置位置
     {
+        cleanList(handerCardList[0]);
         int index = getMyIndexFromList();
         int count = 0;
         for (int i=0;i< playerItems[index].hanCards.Count;i++)
@@ -1252,7 +1259,6 @@ public class MyPDKScript : MonoBehaviour
     /// 开始游戏
     /// </summary>
     /// <param name="response">Response.</param>
-    /// startGame++++{"curGrabAvatarIndex":0,"lastPaiArray":[[0,0,0,0,1,0,1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0]],"paiArray":[[0,0,1,1,0,0,0,0,1,0,0,1,0,0,0,0,1,0,0,1,1,1,1,0,0,0,1,0,0,0,0,1,1,0,1,0,0,0,0,0,0,0,0,0,0,1,0,0,1,0,0,1,0,0]]}
     public void startGame (ClientResponse response)
 	{
 		GlobalDataScript.roomAvatarVoList = avatarList;
@@ -1345,10 +1351,19 @@ public class MyPDKScript : MonoBehaviour
         for (int point = 0; point < 54; point++) {          
               //int point = i + 13 * j;
             if (mineList[0][point] == 1) {
-                print(" --------+++displaySelfhanderCard++++++++++++" + point);
                 playerItems[index].hanCards.Add(point);
            	    }
-            playerItems[index].hanCards.Sort(delegate (int a, int b) { return (a%13).CompareTo(b%13); });
+            playerItems[index].hanCards.Sort(delegate (int a, int b)
+            {
+                if(a <52 && b<52)
+                {
+                    return (a % 13).CompareTo(b % 13);
+                }
+                else
+                {
+                    return (a.CompareTo(b));
+                }
+            });
         }       
         SetPosition ();
 	}
@@ -1392,14 +1407,21 @@ public class MyPDKScript : MonoBehaviour
         {
             int point = landlord_deskCardList[t].GetComponent<pdkCardScript>().getPoint();
             playerItems[bankerIndex].hanCards.Add(point);
-            print(" bankerAddCard ---------------" + t);                               //  存在问题  为什么只for了两次，总共四次 需要加加个判断
-            if (playerItems[bankerIndex].hanCards.Count > 16)
+            print(" bankerAddCard ---------------" + t);                               
+            //landlord_deskCardList.Remove(landlord_deskCardList[t]);
+            Destroy(landlord_deskCardList[t]);
+
+            playerItems[bankerIndex].hanCards.Sort(delegate (int a, int b)
             {
-                landlord_deskCardList.Remove(landlord_deskCardList[t]);
-                Destroy(landlord_deskCardList[t]);
-            }
-         
-            playerItems[bankerIndex].hanCards.Sort(delegate (int a, int b) { return (a % 13).CompareTo(b % 13); });
+                if (a < 52 && b < 52)
+                {
+                    return (a % 13).CompareTo(b % 13);
+                }
+                else
+                {
+                    return (a.CompareTo(b));
+                }
+            });
         }
         SetPosition();
         playerItems[bankerIndex].showPaiCountText(int.Parse(playerItems[bankerIndex].paiCountText.text) + 4);
@@ -1703,19 +1725,35 @@ public class MyPDKScript : MonoBehaviour
 			roomInfo += "、局数<" + GlobalDataScript.roomVo.roundNumber + "局>";
 		}
 
+        roomInfo += "、炸弹数目：" + roomvo.bombMultiple;
 
-		if(GlobalDataScript.roomVo.zhang16)
-			roomInfo += "、每人16张";
-		else
-			roomInfo += "、每人15张";
+        if(GlobalDataScript.roomVo.isKick ){
+            roomInfo += "、踢牌";
+        }
+        else{
+            roomInfo += "、不踢牌";
+        }
 
-		if(GlobalDataScript.roomVo.showPai)
-			roomInfo += "、显示牌";
-		else
-			roomInfo += "、不显示牌";
+        if(GlobalDataScript.roomVo.AA){
+            roomInfo += "、房主付费";
+        }
+        else{
+            roomInfo += "、AA付费";
+        }
 
-		if(GlobalDataScript.roomVo.xian3)
-			roomInfo += "、首轮先出黑桃3";
+
+  //      if (GlobalDataScript.roomVo.zhang16)
+		//	roomInfo += "、每人16张";
+		//else
+		//	roomInfo += "、每人15张";
+
+		//if(GlobalDataScript.roomVo.showPai)
+		//	roomInfo += "、显示牌";
+		//else
+		//	roomInfo += "、不显示牌";
+
+		//if(GlobalDataScript.roomVo.xian3)
+		//	roomInfo += "、首轮先出黑桃3";
 
 		roomRemark.text = roomInfo;
 	}
@@ -1876,7 +1914,6 @@ public class MyPDKScript : MonoBehaviour
 				//CustomSocket.getInstance ().sendMsg (new CurrentStatusRequest ());
 			}
 		}
-
 	}
 
 	/// <summary>
@@ -1903,7 +1940,6 @@ public class MyPDKScript : MonoBehaviour
                     seatIndex = 3 + seatIndex;
 
             } 
-            //   存在问题       报错
 			playerItems [seatIndex].setAvatarVo (avatar);
 		}
 
