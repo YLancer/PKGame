@@ -720,8 +720,7 @@ public class MyPDKScript : MonoBehaviour
                     }
                 }
             }
-            if (re[0] == 3) {
-                //要2个杂牌起立
+            if (re[0] == 3) {//要2个杂牌起立
                 count = 0;
                 for (int i = handerCardList[0].Count - 1; i >= 0; i--) {
                     GameObject gob = handerCardList[0][i];
@@ -739,9 +738,45 @@ public class MyPDKScript : MonoBehaviour
             }
         }
         else if(type1 == pdkCardType.CARDTYPE.c111122)    // 四带二的
-        { }
-
-
+        {
+            int[] re = result[tishiIndex];
+            int count = 0;
+            for (int i = handerCardList[0].Count - 1; i >= 0; i--)
+            {
+                GameObject gob = handerCardList[0][i];
+                if (gob != null)
+                {
+                    pdkCardScript pcs = gob.GetComponent<pdkCardScript>();
+                    if (pcs.getPoint() % 13 == re[1])
+                    {
+                        gob.transform.localPosition = new Vector3(gob.transform.localPosition.x, 40);
+                        pcs.selected = true;
+                        count++;
+                        if (count >= re[0])
+                            break;
+                    }
+                }
+            }
+            if (re[0] == 6){//要2个杂牌起立  lan
+                count = 0;
+                for (int i = handerCardList[0].Count - 1; i >= 0; i--)
+                {
+                    GameObject gob = handerCardList[0][i];
+                    if (gob != null)
+                    {
+                        pdkCardScript pcs = gob.GetComponent<pdkCardScript>();
+                        if (!pcs.selected)
+                        {
+                            gob.transform.localPosition = new Vector3(gob.transform.localPosition.x, 40);
+                            pcs.selected = true;
+                            count++;
+                            if (count >= 2)
+                                break;
+                        }
+                    }
+                }
+            }
+        }
         else if (type1 == pdkCardType.CARDTYPE.c12345) {//顺子
             int[] re = result[tishiIndex];
             print("showTiShi ++++++++ //顺子 " + re);
@@ -1170,9 +1205,7 @@ public class MyPDKScript : MonoBehaviour
                 result.Add(re);
             }
         }
-        else if (type1 == pdkCardType.CARDTYPE.c4)
-        {//炸弹
-
+        else if (type1 == pdkCardType.CARDTYPE.c4){//炸弹
             //炸弹
             for (int k = 0; k < b[3].Count; k++)
             {
@@ -1191,10 +1224,10 @@ public class MyPDKScript : MonoBehaviour
             for (int k = 0; k < b[3].Count; k++)
             {
                 int[] re = new int[2];
-                if (b[3][k] > a[2][0])
+                if (b[3][k] > a[3][0])
                 {
                     re[1] = b[3][k];
-                    re[0] = 3;
+                    re[0] =6;            //  四带二的指针
                     result.Add(re);
                 }
             }

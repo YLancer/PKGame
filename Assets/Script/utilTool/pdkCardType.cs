@@ -352,7 +352,7 @@ namespace AssemblyCSharp
 		public List<int>[] getCount(int[] card) {
 			// 我们先定义一个List a[4]，其中a[0]的值为list中重复一次(单张牌)的牌的个数，
 			// a[1]的值为list中重复二次(对牌)的牌的个数，a[2]的值为list中重复三次(三张)的牌的个数，
-			// a[3]的值为list中重复四次(炸弹)的牌的个数。
+			// a[3]的值为list中重复四次(炸弹)的牌的个数。  也存在四带二的情况 
 			List<int>[] a = new List<int>[4];
 			a[0] = new List<int>();
 			a[1] = new List<int>();
