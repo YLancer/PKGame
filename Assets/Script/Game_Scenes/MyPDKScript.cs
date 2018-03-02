@@ -288,7 +288,7 @@ public class MyPDKScript : MonoBehaviour
         int uuid = (int)json["dzUuid"];                            
         int multiple = (int)json["multiple"];
         int index =  getIndex(uuid);
-        if (uuid == GlobalDataScript.loginResponseData.account.uuid && index ==0)                    
+        if (uuid == GlobalDataScript.loginResponseData.account.uuid )                    
         {
             panel_landlordChoose.SetActive(false);
         }
@@ -300,16 +300,6 @@ public class MyPDKScript : MonoBehaviour
         JsonData json = JsonMapper.ToObject(response.message);
         bankerId = (int)json["avatarIndex"];
 
-        curDirString = getDirection(bankerId);
-        if (curDirString == DirectionEnum.Bottom)
-        {
-            btnActionScript.showBtn();
-            GlobalDataScript.isDrag = true;
-        }
-        else
-        {
-            GlobalDataScript.isDrag = false;
-        }
         avatarList[bankerId].main = true;
         int bankerIdInedx = getIndexByDir(getDirection(bankerId));
         playerItems[bankerIdInedx].setbankImgEnable(true);
@@ -344,6 +334,16 @@ public class MyPDKScript : MonoBehaviour
             panel_GenTi.SetActive(false);
             panel_HuiPai.SetActive(false);
         }
+        curDirString = getDirection(bankerId);
+        if (curDirString == DirectionEnum.Bottom)
+        {
+            btnActionScript.showBtn();
+            GlobalDataScript.isDrag = true;
+        }
+        else
+        {
+            GlobalDataScript.isDrag = false;
+        }
     }
 
     // 踢牌通知所有人  {curTCardAvatarIndex":100371,"multiple":2}
@@ -355,11 +355,11 @@ public class MyPDKScript : MonoBehaviour
         if (GCarduuid== getMyIndexFromList() && multiple==2){
             panel_GenTi.SetActive(true);
         }
-        else if (GCarduuid == getMyIndexFromList() && multiple == 1)
+        else if (GCarduuid == getMyIndexFromList() && multiple == 1 && GCarduuid!= getIndexByDir(getDirection(bankerId)))
         {
             panel_Ti.SetActive(true);
         }
-        else if((int)json["curTCardAvatarIndex"] == GlobalDataScript.loginResponseData.account.uuid)
+        else if((int)json["curTCardAvatarIndex"] == GlobalDataScript.loginResponseData.account.uuid )
         {
             panel_HuiPai.SetActive(true);
         }
@@ -472,7 +472,6 @@ public class MyPDKScript : MonoBehaviour
 
 	public void dissoliveRoomResponse (ClientResponse response)
 	{
-		MyDebug.Log ("dissoliveRoomResponse" + response.message);
 		DissoliveRoomResponseVo dissoliveRoomResponseVo = JsonMapper.ToObject<DissoliveRoomResponseVo> (response.message);
 		string plyerName = dissoliveRoomResponseVo.accountName;
 		if (dissoliveRoomResponseVo.type == "0") {
@@ -489,8 +488,9 @@ public class MyPDKScript : MonoBehaviour
 				Destroy (dissoDialog.GetComponent<VoteScript> ());
 				Destroy (dissoDialog);
 			}
-		}  
-	}
+		}
+        MyDebug.Log("dissoliveRoomResponse+++++++++++" + response.message + " -------" + GlobalDataScript.isOverByPlayer);
+    }
 
 	/// <summary>
 	/// 重新开始计时
@@ -1251,7 +1251,6 @@ public class MyPDKScript : MonoBehaviour
 		for (int i = 0; i < handerCardList [0].Count; i++) {
 			GameObject gob = handerCardList [0] [i];
 			if (gob != null) {
-                print("+ _____putOutCard "+ gob.GetComponent<pdkCardScript>().selected);
 				if (gob.GetComponent<pdkCardScript> ().selected) {
 					pai.Add (gob.GetComponent<pdkCardScript> ().getPoint ());
                     playerItems[getMyIndexFromList()].hanCards.Remove(gob.GetComponent<pdkCardScript>().getPoint());
@@ -1633,9 +1632,9 @@ public class MyPDKScript : MonoBehaviour
 		}
 
 		int[] card = ToArray (pai);
-
-		pdkCardType pct = new pdkCardType ();
-		if (lastCard == null || lastCard.Length == 0) {	//庄家第一手出牌
+        pdkCardType pct = new pdkCardType ();
+        print("+isCanChu++" + card + "---" + (pct.compareType(lastCard, card)));
+        if (lastCard == null || lastCard.Length == 0) {	//庄家第一手出牌
 			pdkCardType.CARDTYPE type = pct.getType (card);
 			if (type == pdkCardType.CARDTYPE.c0) {
 				if (btnActionScript.tishiBtn.active == true) {
@@ -1682,7 +1681,9 @@ public class MyPDKScript : MonoBehaviour
 					}
 				}
 			}
-		} else if (pct.compareType (lastCard, card)) {
+		}
+        
+        else if (pct.compareType (lastCard, card)) {
 			if (btnActionScript.tishiBtn.active == true) {
 				btnActionScript.showBtn (3);
 			}
@@ -1888,6 +1889,7 @@ public class MyPDKScript : MonoBehaviour
 	public void outRoomCallbak (ClientResponse response)
 	{
 		OutRoomResponseVo responseMsg = JsonMapper.ToObject<OutRoomResponseVo> (response.message);
+        print(" ++++++++++++outRoomCallbak" + response.message);
 		if (responseMsg.status_code == "0") {
 			if (responseMsg.type == "0") {
 
@@ -2227,8 +2229,8 @@ public class MyPDKScript : MonoBehaviour
 	public void tuichu ()
 	{      
 		OutRoomRequestVo vo = new OutRoomRequestVo ();
-		vo.roomId = GlobalDataScript.roomVo.roomId;
-		string sendMsg = JsonMapper.ToJson (vo);
+        vo.roomId = GlobalDataScript.roomVo.roomId;
+        string sendMsg = JsonMapper.ToJson (vo);
 
 		CustomSocket.getInstance ().sendMsg (new OutRoomRequest (sendMsg));
 

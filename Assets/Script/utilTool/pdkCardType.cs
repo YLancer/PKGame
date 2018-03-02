@@ -41,7 +41,7 @@ namespace AssemblyCSharp
 			
 			CARDTYPE type1 = getType(oldCardArray);
 			CARDTYPE type2 = getType(newCardArray);
-
+            MyDebug.Log("compareType+++++++++++++++====="+ type1+"/////"+ type2);
 			if(type1 == type2) {
 				int[] oldCard = new int[oldCardArray.Length];
 				for (int i = 0; i < oldCardArray.Length; i++) {
@@ -72,20 +72,22 @@ namespace AssemblyCSharp
 				if(type1 == CARDTYPE.c1) {//单牌
 					if(oldCard[0]<newCard[0])
 						return true;
-				}else if(type1 == CARDTYPE.c2) {// 对子
+				}else if(type1 == CARDTYPE.c2 && oldCard[1] < 52 && oldCard[0] != 0 && oldCard[0] != 12) {// 对子
 					if(oldCard[0]<newCard[0])
 						return true;
-				}else if(type1 == CARDTYPE.c112233) {//连对
+				}else if(type1 == CARDTYPE.c112233) {//连对 
 					if(newCard.Length == oldCard.Length
 						&& oldCard[0]<newCard[0])
 						return true;
-				}else if(type1 == CARDTYPE.c311) {//三带2
-					List<int>[] a = getCount(oldCard);
-					List<int>[] b = getCount(newCard);
-					if( (int)a[2][0] < (int)b[2][0]) {
-						return true;
-					}
-				}else if(type1 == CARDTYPE.c1112223456) {//飞机带翅膀
+				}
+    //            else if(type1 == CARDTYPE.c311) {//三带2
+				//	List<int>[] a = getCount(oldCard);
+				//	List<int>[] b = getCount(newCard);
+				//	if( (int)a[2][0] < (int)b[2][0]) {
+				//		return true;
+				//	}
+				//}
+                else if(type1 == CARDTYPE.c1112223456) {//飞机带翅膀
 					List<int>[] a = getCount(oldCard);
 					List<int>[] b = getCount(newCard);
 					if(oldCard.Length == newCard.Length && (int)a[2][0] < (int)b[2][0])
@@ -187,15 +189,17 @@ namespace AssemblyCSharp
 
 					}
 				}
-			}else if(type1 == CARDTYPE.c311) {//三带2
-				if(b[3].Count>0)
-					return true;
+			}
+   //         else if(type1 == CARDTYPE.c311) {//三带2
+			//	if(b[3].Count>0)
+			//		return true;
 
-				//首先得手牌超过上家出的张数
-				if(length >=chuCard.Length && b[2].Count>0 && (int)a[2][0] < (int)b[2][b[2].Count-1]) {
-					return true;
-				}
-			}else if(type1 == CARDTYPE.c1112223456) {//飞机带翅膀
+			//	//首先得手牌超过上家出的张数
+			//	if(length >=chuCard.Length && b[2].Count>0 && (int)a[2][0] < (int)b[2][b[2].Count-1]) {
+			//		return true;
+			//	}
+			//}
+            else if(type1 == CARDTYPE.c1112223456) {//飞机带翅膀
 				if(b[3].Count>0)
 					return true;
 
@@ -279,19 +283,19 @@ namespace AssemblyCSharp
 			} else if (card.Length == 1) {
 				return CARDTYPE.c1;
 			} else if (card.Length == 2) {
-				if (card[0] == card[1]) {
+				if (card[0] == card[1] && card[1]<52 && card[0]!=0 && card[0]!=12) {
 					return CARDTYPE.c2;
 				}
-                else if ((card[0] == card[1] && card[0] == 0) || (card[0] == card[1] && card[0] == 12))
+                else if (card[0] == card[1] &&  (card[0] == 0 || card[0] == 12))
                 {
                     return CARDTYPE.c4;    //炸弹  两张2 和两张3 lan
                 }
-                else if(card[0] == 52 && card[1]==53)
+                else if (card[0] == 52 && card[1] == 53)
                 {
                     return CARDTYPE.c4;    //炸弹  大小王 lan
                 }
-              
-			} else if (card.Length == 3) {
+
+            } else if (card.Length == 3) {
 				if (card[0] == card[1] && card[1] == card[2]) {
 					return CARDTYPE.c3;
 				}
@@ -314,9 +318,9 @@ namespace AssemblyCSharp
 				// a[3]的值为list中重复四次(炸弹)的牌的个数。
 				List<int>[] a = getCount(card);
 
-				if (card.Length == 5 && a[2].Count == 1) {
-					return CARDTYPE.c311;// 444 99
-				}
+				//if (card.Length == 5 && a[2].Count == 1) {
+				//	return CARDTYPE.c311;// 444 99
+				//}
 
 				if (card.Length >= 5 && a[0].Count == card.Length && (card[length - 1] - card[0] == length - 1)
 					&& card[length - 1] < 12) {// 顺子不能带2 最多到A
@@ -374,7 +378,7 @@ namespace AssemblyCSharp
 					a[3].Add(card[i]);
 				} else if (count == 3) {
 					a[2].Add(card[i]);
-				} else if (count == 2) {
+				} else if (count == 2 && (card[i] != 0 || card[i] != 12 || card[i] < 52)) {
 					a[1].Add(card[i]);
 				} else if (count == 1) {
 					a[0].Add(card[i]);

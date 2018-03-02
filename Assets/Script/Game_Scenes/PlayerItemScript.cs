@@ -596,12 +596,12 @@ public class PlayerItemScript : MonoBehaviour
 	}
 
 	public void showPaiCountText(int count){
-        //if (GlobalDataScript.roomVo.showPai) {
-        //	showPaiCountImage (true);
-        //	paiCountText.text = count.ToString ();
-        //}
-        showPaiCountImage(true);
-        paiCountText.text = count.ToString();
+        if (GlobalDataScript.roomVo.showPai) {
+        	showPaiCountImage (true);
+        	paiCountText.text = count.ToString ();
+        }
+        //showPaiCountImage(true);
+        //paiCountText.text = count.ToString();
     }
 
 	public void showYaoBuQi(bool isShow){

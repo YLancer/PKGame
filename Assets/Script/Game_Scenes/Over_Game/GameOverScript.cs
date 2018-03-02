@@ -257,6 +257,7 @@ public class GameOverScript : MonoBehaviour {
 			button_Delete.SetActive(false);
 
 			closeButton.transform.gameObject.SetActive (false);
+            print("setDisplayContent_pdk+++++++++ " + GlobalDataScript.isOverByPlayer);
 			if (GlobalDataScript.surplusTimes == 0 || GlobalDataScript.isOverByPlayer) {
 				//shareSiganlButton.GetComponent<Image> ().color =Color.white;
 				shareSiganlButton.gameObject.SetActive(true);
