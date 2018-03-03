@@ -167,6 +167,7 @@ namespace AssemblyCSharp
         public const int QIANG_LANDLORDS_REQUEST = 0x90003;   //斗地主抢庄请求
         public const int QIANG_LANDLORDS_RESPONE = 0x90030;   //斗地主抢庄回调
         public const int ZHUANG_LANDLORDS_RESPONE = 0x90031;   //斗地主庄确定回调
+        public const int ZHUANG_NO_LANDLORDS_RESPONE = 0x90032;   //斗地主庄不抢的通知
 
         public const int LANDLORDS_TI_REQUEST = 0x90004;    // 踢牌的请求
         public const int LANDLORDS_TI_RESPONE = 0x90041;    // 踢牌回调仅仅返回给发送请求的玩家
@@ -174,6 +175,8 @@ namespace AssemblyCSharp
 
         public const int LANDLORDS_CHUPAI_REQUEST = 0x90005;     //斗地主出牌请求
         public const int LANDLORDS_CHUPAI_RESPONSE = 0x90050;    //斗地主出牌通知
+
+        public const int LANDLORDS_YAOBUQI_REQUEST = 0x90049;   //斗地主要不起请求
         public const int LANDLORDS_YAOBUQI_RESPONSE = 0x90051;   //斗地主要不起
 
         public const int LANDLORDS_APPLYLEAVE_ROOM_REQUEST = 0x90006;//申请解散房间

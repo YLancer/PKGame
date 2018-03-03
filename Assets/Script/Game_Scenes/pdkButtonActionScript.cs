@@ -23,12 +23,12 @@ public class pdkButtonActionScript : MonoBehaviour
 	public void showBtn (int type = 2)
 	{
 		if (type == 2) {
-			buchuBtn.SetActive (false);
+			buchuBtn.SetActive (true);
 			tishiBtn.SetActive (true);
 			chupaiBtn.SetActive (false);
 			chupai2Btn.SetActive (true);
 		} else if (type == 3){
-			buchuBtn.SetActive (false);
+			buchuBtn.SetActive (true);
 			tishiBtn.SetActive (true);
 			chupaiBtn.SetActive (true);
 			chupai2Btn.SetActive (false);

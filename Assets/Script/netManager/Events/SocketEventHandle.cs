@@ -71,6 +71,7 @@ namespace AssemblyCSharp
         //  -lan 斗地主
         public ServerCallBackEvent DDZ_qiangResponse;
         public ServerCallBackEvent DDZ_zhuangResponse; //庄家确定通知
+        public ServerCallBackEvent DDZ_zhuangNOResponse; //庄家不抢通知
         public ServerCallBackEvent DDZ_TIResponse;     //踢牌的通知
         public ServerCallBackEvent DDZ_ALL_TI_Response;  //踢牌的通知给所有的玩家
         // 斗牛
@@ -217,7 +218,13 @@ namespace AssemblyCSharp
                     DDZ_zhuangResponse(response);
                 }
                 break;
-            case APIS.LANDLORDS_TI_RESPONE:                    // 斗地主踢牌通知
+            case APIS.ZHUANG_NO_LANDLORDS_RESPONE:                // 斗地主不抢庄庄的通知
+                if (DDZ_zhuangNOResponse != null)
+                {
+                        DDZ_zhuangNOResponse(response);
+                }
+                break;
+                case APIS.LANDLORDS_TI_RESPONE:                    // 斗地主踢牌通知
                 if (DDZ_TIResponse != null)
                 {
                     DDZ_TIResponse(response);

@@ -189,6 +189,7 @@ public class MyPDKScript : MonoBehaviour
 
         SocketEventHandle.getInstance().DDZ_qiangResponse += DDZ_qiangResponse;
         SocketEventHandle.getInstance().DDZ_zhuangResponse += DDZ_zhuangResponse;
+        SocketEventHandle.getInstance().DDZ_zhuangNOResponse += DDZ_zhuangNOResponse;
         SocketEventHandle.getInstance().DDZ_TIResponse += DDZ_TIResponse;
         SocketEventHandle.getInstance().DDZ_ALL_TI_Response += DDZ_ALL_TI_Response;
     }
@@ -212,6 +213,7 @@ public class MyPDKScript : MonoBehaviour
 
         SocketEventHandle.getInstance().DDZ_qiangResponse -= DDZ_qiangResponse;
         SocketEventHandle.getInstance().DDZ_zhuangResponse -= DDZ_zhuangResponse;
+        SocketEventHandle.getInstance().DDZ_zhuangNOResponse -= DDZ_zhuangNOResponse;
         SocketEventHandle.getInstance().DDZ_TIResponse -= DDZ_TIResponse;
         SocketEventHandle.getInstance().DDZ_ALL_TI_Response -= DDZ_ALL_TI_Response;
     }
@@ -259,6 +261,7 @@ public class MyPDKScript : MonoBehaviour
 		getDirection (bankerId);
 		playerItems [curDirIndex].setbankImgEnable (false);
         playerItems[curDirIndex].setTiImage(false);
+        
         if (handerCardList != null && handerCardList.Count > 0 && handerCardList[0].Count > 0)
         {
             for (int i = 0; i < handerCardList[0].Count; i++)
@@ -284,6 +287,7 @@ public class MyPDKScript : MonoBehaviour
     
     void DDZ_qiangResponse(ClientResponse response)                                 
     {
+        print("++++++++++++DDZ_qiangResponse++++++" + response.message);
         JsonData json = JsonMapper.ToObject(response.message);
         int uuid = (int)json["dzUuid"];                            
         int multiple = (int)json["multiple"];
@@ -291,6 +295,17 @@ public class MyPDKScript : MonoBehaviour
         if (uuid == GlobalDataScript.loginResponseData.account.uuid )                    
         {
             panel_landlordChoose.SetActive(false);
+        }
+    }
+    // 不抢庄的通知，下一家抢地主界面显示
+    void DDZ_zhuangNOResponse(ClientResponse response)
+    {
+        print("DDZ_zhuangNOResponse+++++++ " + response.message);
+        JsonData json = JsonMapper.ToObject(response.message);
+        int GrabAvatarUUID = (int)json["curGrabAvatarUUID"];
+        if (GrabAvatarUUID == GlobalDataScript.loginResponseData.account.uuid)
+        {
+            panel_landlordChoose.SetActive(true);
         }
     }
 
@@ -338,6 +353,7 @@ public class MyPDKScript : MonoBehaviour
         if (curDirString == DirectionEnum.Bottom)
         {
             btnActionScript.showBtn();
+            btnActionScript.buchuBtn.GetComponent<Button >().interactable = false;
             GlobalDataScript.isDrag = true;
         }
         else
@@ -355,7 +371,7 @@ public class MyPDKScript : MonoBehaviour
         if (GCarduuid== getMyIndexFromList() && multiple==2){
             panel_GenTi.SetActive(true);
         }
-        else if (GCarduuid == getMyIndexFromList() && multiple == 1 && GCarduuid!= getIndexByDir(getDirection(bankerId)))
+        else if (GCarduuid == getMyIndexFromList() && multiple == 1 && (int)json["curTCardAvatarIndex"] != GlobalDataScript.loginResponseData.account.uuid)
         {
             panel_Ti.SetActive(true);
         }
@@ -368,6 +384,7 @@ public class MyPDKScript : MonoBehaviour
     void initPanel ()
 	{
 		clean ();
+        cleanList(landlord_deskCardList);
 		readyBtn.gameObject.SetActive (true);
 		isGameStart = false;
 		for (int i=0; i<playerItems.Count; i++) {
@@ -394,6 +411,7 @@ public class MyPDKScript : MonoBehaviour
 		if (mineList != null) {
 			mineList.Clear ();
 		}
+        playerItems[getMyIndexFromList()].hanCards.Clear();
 	}
 
 	private void cleanArrayList (List<List<GameObject>> list)
@@ -514,7 +532,8 @@ public class MyPDKScript : MonoBehaviour
 		currentIndex = outIndex;
 		if (outIndex == 0) {//自己
 			btnActionScript.showBtn ();
-		} else {//别人
+            btnActionScript.buchuBtn.GetComponent<Button>().interactable = true;
+        } else {//别人
 			
 		}
 
@@ -594,9 +613,9 @@ public class MyPDKScript : MonoBehaviour
 			cleanChuPai (currentIndex);
 		} else if (type == 1) {//接上家 继续出牌的提示
 			btnActionScript.showBtn ();
-
-			//去除上轮打出的牌
-			cleanChuPai(0);
+            btnActionScript.buchuBtn.GetComponent<Button>().interactable = true ;
+            //去除上轮打出的牌
+            cleanChuPai(0);
 
 			TiShi ();//智能自动弹出能出的牌
 		} else if (type == 2) {//都吃不起，开始新一轮出牌的提示
@@ -1381,7 +1400,9 @@ public class MyPDKScript : MonoBehaviour
     /// <param name="response">Response.</param>
     public void startGame (ClientResponse response)
 	{
-		GlobalDataScript.roomAvatarVoList = avatarList;
+        print("++++++startGame+++++++startGame++" + response.message);
+        print("---------startGame-------" + GlobalDataScript.loginResponseData.account.uuid);
+        GlobalDataScript.roomAvatarVoList = avatarList;
 		StartGameVO sgvo = JsonMapper.ToObject<StartGameVO> (response.message);
 		//bankerId = sgvo.bankerId;           原版是开始游戏时候就确定谁是庄家   -lan
 		GlobalDataScript.roomVo.guiPai = sgvo.gui;
@@ -1430,7 +1451,7 @@ public class MyPDKScript : MonoBehaviour
         
         //在第一局开始的时候是房主作为第一个抢地主的玩家，其次开始轮转
         //在开始阶段需要服务器返回一个位置  作为可抢地主的玩家索引  
-        if (sgvo.GrabAvatarIndex == getMyIndexFromList())
+        if (sgvo.curGrabAvatarUUID == GlobalDataScript.loginResponseData.account.uuid)
         {
             panel_landlordChoose.SetActive(true);
         }

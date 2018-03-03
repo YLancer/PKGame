@@ -8,7 +8,7 @@ namespace AssemblyCSharp
 	{
 		public List<List<int>> paiArray;
         public List<List<int>> lastPaiArray;     // 新增的桌面上应该出现的牌组
-        public int GrabAvatarIndex;  //bankerId;
+        public int curGrabAvatarUUID;  //bankerId;
         public int gui;
         public int touzi;
 		public int gui2;
