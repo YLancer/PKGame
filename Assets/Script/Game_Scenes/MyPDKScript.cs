@@ -1261,6 +1261,14 @@ public class MyPDKScript : MonoBehaviour
         }
         return result;
 	}
+   
+    public void NOputcard()
+    {
+        bool putCard = false;
+        CustomSocket.getInstance().sendMsg(new PDK_NOputCardRequest(putCard));
+        btnActionScript.cleanBtnShow();
+    }
+
 
 	//自己出牌
 	public void putOutCard ()
