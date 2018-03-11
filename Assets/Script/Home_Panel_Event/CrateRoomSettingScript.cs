@@ -1201,7 +1201,7 @@ public class CrateRoomSettingScript : MonoBehaviour {
         else if (ddzRules[6].isOn){
             sendVo.bombMultiple = 4;
         }
-
+        sendVo.xian3 = false;              //  黑桃3问题
         sendVo.isKick=!ddzRules[8].isOn;
         sendVo.AA = ddzRules[10].isOn;
         sendVo.gameType = (int)GameTypePK.DDZ;                                

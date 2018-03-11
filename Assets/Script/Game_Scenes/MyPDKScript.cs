@@ -300,7 +300,6 @@ public class MyPDKScript : MonoBehaviour
     // 不抢庄的通知，下一家抢地主界面显示
     void DDZ_zhuangNOResponse(ClientResponse response)
     {
-        print("DDZ_zhuangNOResponse+++++++ " + response.message);
         JsonData json = JsonMapper.ToObject(response.message);
         int GrabAvatarUUID = (int)json["curGrabAvatarUUID"];
         if (GrabAvatarUUID == GlobalDataScript.loginResponseData.account.uuid)
@@ -313,7 +312,7 @@ public class MyPDKScript : MonoBehaviour
     void DDZ_zhuangResponse(ClientResponse response)   
     {
         JsonData json = JsonMapper.ToObject(response.message);
-        bankerId = (int)json["avatarIndex"];
+        bankerId = getIndex((int)json["avatarIndex"]);
 
         avatarList[bankerId].main = true;
         int bankerIdInedx = getIndexByDir(getDirection(bankerId));
@@ -349,8 +348,9 @@ public class MyPDKScript : MonoBehaviour
             panel_GenTi.SetActive(false);
             panel_HuiPai.SetActive(false);
         }
-        curDirString = getDirection(bankerId);
-        if (curDirString == DirectionEnum.Bottom)
+        //curDirString = getDirection(bankerId);
+       // if (curDirString == DirectionEnum.Bottom)
+       if(bankerId == getMyIndexFromList())
         {
             btnActionScript.showBtn();
             btnActionScript.buchuBtn.GetComponent<Button >().interactable = false;
@@ -1264,8 +1264,7 @@ public class MyPDKScript : MonoBehaviour
    
     public void NOputcard()
     {
-        bool putCard = false;
-        CustomSocket.getInstance().sendMsg(new PDK_NOputCardRequest(putCard));
+        CustomSocket.getInstance().sendMsg(new PDK_NOputCardRequest(-1));
         btnActionScript.cleanBtnShow();
     }
 
@@ -1493,7 +1492,6 @@ public class MyPDKScript : MonoBehaviour
 	private void displaySelfhanderCard ()            
     {
         int index = getMyIndexFromList();
-       
         List<int> sort = new List<int>();
         //for (int i = 12; i >= 0; i--) {
         //for (int j = 0; j < 4; j++) {
@@ -1551,6 +1549,18 @@ public class MyPDKScript : MonoBehaviour
     void bankerAddCard(int bankerIndex)
     {
         // 首先要消失所有的手牌   
+        //int curBankIndex=-1;
+        //if (bankerIndex ==2) {
+        //    curBankIndex = 1;
+        //}
+        //else if(bankerIndex == 1){
+        //    curBankIndex = 2;
+        //}
+        //else if (bankerIndex == 0)
+        //{
+        //    curBankIndex = 0;
+        //}
+
         cleanList(handerCardList[0]);
         for (int t = 0; t < landlord_deskCardList.Count; t++)
         {
@@ -1674,11 +1684,12 @@ public class MyPDKScript : MonoBehaviour
 			           || type == pdkCardType.CARDTYPE.c111222N) {
 
 				if (btnActionScript.tishiBtn.active == true) {
-					if (handerCardList [0].Count == pai.Count)//最后一手牌
-							btnActionScript.showBtn (3);
-					else
-						btnActionScript.showBtn (2);
-				}
+					//if (handerCardList [0].Count == pai.Count)//最后一手牌
+					//		btnActionScript.showBtn (3);
+					//else
+					//	btnActionScript.showBtn (2);
+                    btnActionScript.showBtn(3);
+                }
 				
 			} else {
 				if (btnActionScript.tishiBtn.active == true) {
